@@ -436,6 +436,18 @@ header h1 {
   text-overflow: ellipsis;
 }
 
+.ex-id {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  font-family: monospace;
+  vertical-align: middle;
+}
+
 .card-tags {
   display: flex;
   gap: 5px;
@@ -1051,10 +1063,10 @@ const TYPE_TO_ICON = { 'Part 1': '🪵', 'Part 2': '✨', 'Part 3': '📖', 'Par
 const TYPE_TO_PASSAGE = { 'Part 1': 'sign', 'Part 2': 'matching', 'Part 3': 'diary', 'Part 4': 'mcq-cloze', 'Part 5': 'guide' };
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
 
-function normalizeExercise(ext) {
+function normalizeExercise(ext, entry) {
   const norm = {
-    id: ext.id,
-    category: ext.categoryZh || ext.category,
+    id: entry.id,
+    category: entry.categoryZh || ext.category || '',
     type: ext.type,
     icon: TYPE_TO_ICON[ext.type] || '📋',
     title: ext.title,
@@ -1062,8 +1074,8 @@ function normalizeExercise(ext) {
     passage: ext.passage || null,
     questions: (ext.questions || []).map(q => ({
       id: q.id,
-      text: q.text,
-      options: q.options.map((text, i) => ({
+      text: q.text || q.question || '',
+      options: (q.options || []).map((text, i) => ({
         label: OPTION_LABELS[i], text
       })),
       correct: OPTION_LABELS[q.correct]
@@ -1077,7 +1089,7 @@ function normalizeExercise(ext) {
     vocabulary: (ext.vocabulary || []).map(v => ({
       word: v.word, pos: v.pos, zh: v.meaning, ctx: v.gameContext
     })),
-    clozeText: ext.clozeText || null,
+    clozeText: ext.clozeText || ext.passage || null,
     blanks: ext.blanks || null,
     players: ext.players || null,
     items: ext.items || null,
@@ -1092,7 +1104,7 @@ const EXERCISES = (window.MINECRAFT_KET_INDEX || []).map(entry => {
     console.warn('Missing exercise data for:', entry.id);
     return null;
   }
-  return normalizeExercise(ext);
+  return normalizeExercise(ext, entry);
 }).filter(Boolean);
 
 if (EXERCISES.length === 0) {
@@ -1178,7 +1190,7 @@ function buildMatchingPassageHTML(ex) {
   ex.items.forEach(item => {
     html += `<div class="item-card">
       <div class="item-card-head"><span class="item-label">${item.label}.</span><span class="item-name">${item.name}</span></div>
-      <div class="item-desc">${item.desc}</div>
+      <div class="item-desc">${item.desc || item.description || ''}</div>
     </div>`;
   });
   html += `</div>`;
@@ -1212,7 +1224,7 @@ function buildMatchingQuestionsHTML(ex) {
   html += `<div class="match-players-header">🎮 Match each player to the best item:</div>`;
   ex.players.forEach(p => {
     html += `<div class="match-row">
-      <div class="match-player"><strong>${p.name}:</strong> ${p.desc}</div>
+      <div class="match-player"><strong>${p.name}:</strong> ${p.text || p.desc || ''}</div>
       <select class="match-select" data-exid="${ex.id}" data-pid="${p.id}">
         <option value="">—</option>
         <option value="A">A</option>
@@ -1263,7 +1275,7 @@ function renderCard(ex) {
     <div class="card-header">
       <div class="card-icon-wrap">${ex.icon}</div>
       <div class="card-meta">
-        <div class="card-title">${ex.title}</div>
+        <div class="card-title">${ex.title} <span class="ex-id">#${ex.id.replace('mc-ket-','')}</span></div>
         <div class="card-tags">
           <span class="tag tag-cat">${ex.category}</span>
           <span class="tag ${partClass}">${ex.type}</span>

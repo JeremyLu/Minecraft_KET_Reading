@@ -1,7 +1,7 @@
 /**
  * mc-ket-053 — Bow vs Crossbow
  * Category: Survival Basics / 生存基础
- * Type: Part 2 — Matching (5 × 左栏描述 → 右栏图片选项)
+ * Type: Part 2 — Matching (5 players x 5 items)
  * Grammar: 比较级 + 不定式表目的
  * Topic: 弓 vs 弩 — 远程武器对比
  */
@@ -16,28 +16,70 @@
     type: "Part 2",
     title: "Bow vs Crossbow",
 
-    descriptions: [
-      { id: "d1", text: "The most common long-range weapon. It shoots arrows." },
-      { id: "d2", text: "A stronger weapon that shoots farther. It takes longer to load." },
-      { id: "d3", text: "A special arrow that explodes when it hits something." },
-      { id: "d4", text: "A magical enchantment that lets your bow shoot three arrows at once." },
-      { id: "d5", text: "A device made of strings and sticks that shoots arrows. You need to pull it back." },
+    players: [
+      {
+        id: 1,
+        name: "Alex",
+        desc: "Alex is hunting skeletons from a hilltop. He needs the most common long-range weapon that shoots arrows. He has plenty of string and sticks to craft it."
+      },
+      {
+        id: 2,
+        name: "Steve",
+        desc: "Steve is defending his village from pillagers. He wants a stronger weapon that shoots farther than a normal bow. He doesn't mind waiting longer to load it between shots."
+      },
+      {
+        id: 3,
+        name: "Jenny",
+        desc: "Jenny wants to blow up a group of creepers from far away. She needs a special kind of arrow that explodes when it hits something."
+      },
+      {
+        id: 4,
+        name: "Tom",
+        desc: "Tom is fighting three zombies at once. He wants a magical enchantment that lets his weapon shoot three arrows at the same time."
+      },
+      {
+        id: 5,
+        name: "Sarah",
+        desc: "Sarah wants a glowing purple enchantment on her bow. She heard that some enchantments can make arrows deal more damage or even set targets on fire."
+      },
     ],
 
-    images: [
-      { id: "iA", alt: "A crossbow with a wooden stock" },
-      { id: "iB", alt: "A bow made of wood and string" },
-      { id: "iC", alt: "Three arrows flying at once from one bow" },
-      { id: "iD", alt: "A bow with a glowing purple enchantment on its string" },
-      { id: "iE", alt: "A red and white arrow with a glowing tip" },
+    items: [
+      {
+        label: "A",
+        name: "Bow",
+        desc: "The most common long-range weapon in Minecraft. It is made of three sticks and three pieces of string. To shoot, you need to pull it back and hold. The longer you hold, the farther the arrow flies. It can be enchanted with Power, Flame, Punch, and Infinity.",
+      },
+      {
+        label: "B",
+        name: "Crossbow",
+        desc: "A stronger long-range weapon that shoots arrows and fireworks. It takes longer to load than a bow but shoots farther and deals more damage. You can load it and keep it ready to fire instantly. It can be enchanted with Quick Charge, Piercing, and Multishot.",
+      },
+      {
+        label: "C",
+        name: "Tipped Arrows",
+        desc: "Special arrows that have been dipped in potions. There are 16 types! An Arrow of Harming deals instant damage. An Arrow of Poison makes enemies slowly lose health. An Arrow of Slowness makes enemies walk slower. You can craft them using a Cauldron.",
+      },
+      {
+        label: "D",
+        name: "Multishot Enchantment",
+        desc: "A magical enchantment that only works on crossbows. When you fire, it shoots three arrows at once instead of just one! It is great for fighting multiple enemies. But it uses three arrows from your inventory each time you shoot.",
+      },
+      {
+        label: "E",
+        name: "Enchanted Bow",
+        desc: "A bow with a glowing purple light on it. Enchantments like Power V make it deal more damage. Flame sets enemies on fire. Infinity lets you shoot forever with just one arrow. Punch pushes enemies back when they get hit.",
+      },
     ],
+
+    correctMatching: { 1: "A", 2: "B", 3: "C", 4: "D", 5: "E" },
 
     answers: [
-      { id: "d1", match: "iB", explanation: "最基础的远程武器是 Bow（弓），用木棍和线合成。" },
-      { id: "d2", match: "iA", explanation: "Crossbow（弩）射程远、伤害高，但装填时间比弓慢。" },
-      { id: "d3", match: "iE", explanation: "Tipped Arrow with a glowing tip can explode（火箭/gas arrow）。红白箭头表示特殊药箭。" },
-      { id: "d4", match: "iC", explanation: "Multishot 附魔让弩一次射出 3 支箭，是弩的专属附魔。" },
-      { id: "d5", match: "iD", explanation: "Bow 是木棍+线制成的弓，需要蓄力（pull back）才能射出，紫色的魔法发光是附魔弓。" },
+      { id: "1", answer: "A (Bow)", explanation: "Alex 需要最常见的远程武器，Bow 是用木棍和线做的基础弓。" },
+      { id: "2", answer: "B (Crossbow)", explanation: "Steve 要射程更远、伤害更高的武器，Crossbow 比 Bow 更强但装填更慢。" },
+      { id: "3", answer: "C (Tipped Arrows)", explanation: "Jenny 想要能爆炸的特殊箭，Tipped Arrows include the Arrow of Harming（伤害箭）。" },
+      { id: "4", answer: "D (Multishot)", explanation: "Tom 要一次射三支箭，Multishot 是弩的专属附魔，一次射出 3 支箭。" },
+      { id: "5", answer: "E (Enchanted Bow)", explanation: "Sarah 要发紫色光芒的附魔弓，Power / Flame / Infinity 等附魔都在弓上发光。" },
     ],
 
     vocabulary: [

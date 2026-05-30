@@ -1,7 +1,7 @@
 /**
  * mc-ket-056 — Axe or Sword
  * Category: Survival Basics / 生存基础
- * Type: Part 1 — Sign / Notice (3 notices, 5 × MCQ)
+ * Type: Part 1 — Sign / Notice (3 notices, 5 x MCQ)
  * Grammar: 祈使句 + 比较级 + 建议表达
  * Topic: 斧头战斗 — Axe vs Sword 近战武器选择
  */
@@ -16,76 +16,61 @@
     type: "Part 1",
     title: "Axe or Sword",
 
-    notices: [
-      {
-        id: "n1",
-        title: "VILLAGE BLACKSMITH",
-        text: [
-          "AXE IS BACK!",
-          "",
-          "An iron axe does 9 attack damage.",
-          "An iron sword does 6 attack damage.",
-          "But axes are slower than swords.",
-          "Choose wisely: damage vs speed!",
-          "Visit our shop today.",
-        ].join("\n"),
-      },
-      {
-        id: "n2",
-        title: "ADVENTURER'S TIP",
-        text: [
-          "WHEN TO USE AN AXE",
-          "",
-          "1. Fighting a single strong enemy",
-          "2. Breaking wooden shields quickly",
-          "3. Chopping trees AND fighting",
-          "",
-          "One tool, two uses!",
-        ].join("\n"),
-      },
-      {
-        id: "n3",
-        title: "WEAPON WARNING",
-        text: [
-          "DON'T FORGET YOUR SWORD!",
-          "",
-          "Axes lose durability TWICE as",
-          "fast in combat. They are made",
-          "for chopping wood, not fighting!",
-          "",
-          "Bring spare weapons!",
-        ].join("\n"),
-      },
-    ],
+    passage: [
+      "═══ VILLAGE BLACKSMITH ═══",
+      "",
+      "AXE IS BACK!",
+      "An iron axe does 9 attack damage.",
+      "An iron sword does 6 attack damage.",
+      "But axes are slower than swords.",
+      "Choose wisely: damage vs speed!",
+      "Visit our shop today.",
+      "",
+      "═══ ADVENTURER'S TIP ═══",
+      "",
+      "WHEN TO USE AN AXE",
+      "1. Fighting a single strong enemy",
+      "2. Breaking wooden shields quickly",
+      "3. Chopping trees AND fighting",
+      "One tool, two uses!",
+      "",
+      "═══ WEAPON WARNING ═══",
+      "",
+      "DON'T FORGET YOUR SWORD!",
+      "Axes lose durability TWICE as",
+      "fast in combat. They are made",
+      "for chopping wood, not fighting!",
+      "Bring spare weapons!",
+    ].join("\n"),
 
     questions: [
       {
         id: "q1",
-        question: "How much damage does an iron axe do?",
+        text: "How much damage does an iron axe do?",
         options: ["6", "9", "12"],
         correct: 1,
       },
       {
         id: "q2",
-        question: "What is the disadvantage of an axe?",
+        text: "What is the disadvantage of an axe?",
         options: ["It does less damage", "It is slower", "It breaks in one hit"],
         correct: 1,
       },
       {
         id: "q3",
-        question: "According to the Tip, when should you use an axe?",
+        text: "According to the Tip, when should you use an axe?",
         options: ["Fighting many zombies", "Fighting a single strong enemy", "Running away from mobs"],
         correct: 1,
       },
       {
         id: "q4",
-        question: "What happens when you use an axe to fight for too long?",
+        text: "What happens when you use an axe to fight for too long?",
         options: ["It becomes faster", "It loses durability faster", "It turns into a sword"],
         correct: 1,
       },
       {
         id: "q5",
-        question: "What is the main use of an axe?",
+        text: "What is the main use of an axe?",
         options: ["Fighting mobs", "Chopping wood", "Building houses"],
         correct: 1,
       },
