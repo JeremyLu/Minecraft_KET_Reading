@@ -1037,53 +1037,12 @@ header h1 {
      See data/index.js for the master registry.
      When adding a new exercise:
        1. Create data/exercises/<category>/ex-XXX.js
-       2. Register it in data/index.js
-       3. ADD A <script> TAG BELOW to load the file
+       2. Register it in data/index.js  (add() call)
+       3. Done! The auto-loader picks it up automatically.  No <script> tag needed!
      ════════════════════════════════════════════════════════ -->
 <script src="data/index.js"></script>
-<script src="data/exercises/mobs-creatures/ex-001.js"></script>
-<script src="data/exercises/survival-basics/ex-002.js"></script>
-<script src="data/exercises/mobs-creatures/ex-003.js"></script>
-<script src="data/exercises/mobs-creatures/ex-039.js"></script>
-<script src="data/exercises/mobs-creatures/ex-040.js"></script>
-<script src="data/exercises/mobs-creatures/ex-041.js"></script>
-<script src="data/exercises/mobs-creatures/ex-042.js"></script>
-<script src="data/exercises/mobs-creatures/ex-043.js"></script>
-<script src="data/exercises/mobs-creatures/ex-044.js"></script>
-<script src="data/exercises/exploration/ex-004.js"></script>
-<script src="data/exercises/settings-commands/ex-005.js"></script>
-<script src="data/exercises/survival-basics/ex-006.js"></script>
-<script src="data/exercises/survival-basics/ex-007.js"></script>
-<script src="data/exercises/survival-basics/ex-008.js"></script>
-<script src="data/exercises/survival-basics/ex-009.js"></script>
-<script src="data/exercises/survival-basics/ex-010.js"></script>
-<script src="data/exercises/survival-basics/ex-011.js"></script>
-<script src="data/exercises/survival-basics/ex-012.js"></script>
-<script src="data/exercises/survival-basics/ex-033.js"></script>
-<script src="data/exercises/survival-basics/ex-034.js"></script>
-<script src="data/exercises/survival-basics/ex-035.js"></script>
-<script src="data/exercises/survival-basics/ex-036.js"></script>
-<script src="data/exercises/survival-basics/ex-037.js"></script>
-<script src="data/exercises/survival-basics/ex-038.js"></script>
-<!-- Add more <script> tags here as you generate exercises -->
-<script src="data/exercises/survival-basics/ex-045.js"></script>
-<script src="data/exercises/mobs-creatures/ex-046.js"></script>
-<script src="data/exercises/exploration/ex-047.js"></script>
-<script src="data/exercises/exploration/ex-048.js"></script>
-<script src="data/exercises/exploration/ex-049.js"></script>
-<script src="data/exercises/survival-basics/ex-050.js"></script>
-<script src="data/exercises/mobs-creatures/ex-051.js"></script>
-<script src="data/exercises/survival-basics/ex-052.js"></script>
-<script src="data/exercises/survival-basics/ex-053.js"></script>
-<script src="data/exercises/survival-basics/ex-054.js"></script>
-<script src="data/exercises/survival-basics/ex-055.js"></script>
-<script src="data/exercises/survival-basics/ex-056.js"></script>
-<script src="data/exercises/survival-basics/ex-057.js"></script>
-<script src="data/exercises/survival-basics/ex-058.js"></script>
-<script src="data/exercises/survival-basics/ex-059.js"></script>
-<script src="data/exercises/survival-basics/ex-060.js"></script>
-
 <script>
+MINECRAFT_KET_LOADER.loadAll().then(function() {
 // ============================================================
 // DATA NORMALIZATION — convert external exercise format
 // ============================================================
@@ -1519,6 +1478,7 @@ document.getElementById('load-more-btn').addEventListener('click', renderPage);
 
 // Init
 renderPage();
+});
 </script>
 </body>
 </html>

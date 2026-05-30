@@ -3,8 +3,8 @@
  *
  * How to add a new exercise:
  * 1. Create the .js file under data/exercises/<category>/
- * 2. Add an entry in the ADD_EXERCISE block below with metadata + file path
- * 3. Add a <script> tag in index.html to load the file
+ * 2. Add an add() entry below with metadata + file path
+ * 3. Done! The auto-loader at the bottom picks it up — no <script> tag needed in index.html!
  */
 
 MINECRAFT_KET_INDEX = (function () {
@@ -317,3 +317,33 @@ MINECRAFT_KET_INDEX = (function () {
 
   return index;
 })();
+
+// ================================================================
+//  AUTO-LOADER — dynamically loads all exercise scripts
+//  Reads the INDEX registry (which already has file paths),
+//  creates <script> elements, and returns a Promise.
+//  No more manual <script src> tags needed in index.html!
+// ================================================================
+MINECRAFT_KET_LOADER = {
+  loadAll: function () {
+    var entries = MINECRAFT_KET_INDEX;
+    console.log('[KET Loader] Loading', entries.length, 'exercises...');
+
+    var promises = entries.map(function (entry) {
+      return new Promise(function (resolve) {
+        var script = document.createElement('script');
+        script.src = entry.file;
+        script.onload = function () { resolve(); };
+        script.onerror = function () {
+          console.warn('[KET Loader] Missing:', entry.file, '(' + entry.id + ')');
+          resolve(); // don't block — skip broken files
+        };
+        document.head.appendChild(script);
+      });
+    });
+
+    return Promise.all(promises).then(function () {
+      console.log('[KET Loader] All exercises loaded.');
+    });
+  }
+};
