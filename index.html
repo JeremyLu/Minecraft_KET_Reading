@@ -1322,7 +1322,9 @@ function renderPage() {
   } else {
     empty.style.display = 'none';
     let slice;
-    if (showingAll) {
+    // Done filter always shows all — no need to paginate a completion list
+    const showAll = showingAll || activeFilter === 'done';
+    if (showAll) {
       slice = filtered.slice(currentPage * PAGE_SIZE);
       currentPage = Math.ceil(filtered.length / PAGE_SIZE);
     } else {
@@ -1359,21 +1361,22 @@ function resetAndRender() {
 }
 
 // ── Interactions ──
+// Expose to global scope so inline onclick="..." attributes can call them
 
-function selectOpt(btn, exId, qId, label) {
+window.selectOpt = function selectOpt(btn, exId, qId, label) {
   document.querySelectorAll(`.option-btn[data-exid="${exId}"][data-qid="${qId}"]`)
     .forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-}
+};
 
-function toggleAnswer(btn, contentId) {
+window.toggleAnswer = function toggleAnswer(btn, contentId) {
   const content = document.getElementById(contentId);
   const open = content.classList.toggle('visible');
   btn.classList.toggle('open', open);
   btn.querySelector('.toggle-arrow').textContent = open ? '▲' : '▼';
-}
+};
 
-function checkCard(exId) {
+window.checkCard = function checkCard(exId) {
   const ex = EXERCISES.find(e => e.id === exId);
   if (!ex) return;
   let allCorrect = true;
@@ -1429,6 +1432,13 @@ function checkCard(exId) {
 
   if (allCorrect && !completedIds.includes(exId)) {
     completedIds.push(exId);
+    updateProgress();
+    // If viewing the Done filter, re-render so the newly completed card appears
+    if (activeFilter === 'done') {
+      resetAndRender();
+      return;
+    }
+    // Otherwise just update the card's tags in-place
     const card = document.getElementById('card-' + exId);
     const tags = card?.querySelector('.card-tags');
     if (tags && !tags.querySelector('.tag-done')) {
@@ -1437,20 +1447,19 @@ function checkCard(exId) {
       d.textContent = '✅ Done';
       tags.appendChild(d);
     }
-    updateProgress();
   }
 
   document.getElementById('check-' + exId).disabled = true;
-}
+};
 
-function resetCard(exId) {
+window.resetCard = function resetCard(exId) {
   completedIds = completedIds.filter(id => id !== exId);
   updateProgress();
   const ex = EXERCISES.find(e => e.id === exId);
   if (!ex) return;
   const old = document.getElementById('card-' + exId);
   if (old) old.replaceWith(renderCard(ex));
-}
+};
 
 // ── Filter & Search ──
 document.querySelectorAll('.filter-btn').forEach(btn => {
