@@ -1219,17 +1219,33 @@ function buildQuestionsHTML(ex) {
   return html;
 }
 
+function shuffleArray(arr) {
+  // Fisher-Yates shuffle — returns a new shuffled array
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function buildMatchingQuestionsHTML(ex) {
   let html = `<div class="questions-section">`;
   html += `<div class="match-players-header">🎮 Match each player to the best item:</div>`;
-  ex.players.forEach(p => {
+
+  // Shuffle the PLAYERS (questions) order — keeps kids thinking
+  // Items stay in original A/B/C/D/E order so the labels are predictable
+  const shuffledPlayers = shuffleArray(ex.players);
+
+  shuffledPlayers.forEach(p => {
+    const opts = ex.items.map(item =>
+      `<option value="${item.label}">${item.label} — ${item.name}</option>`
+    ).join('\n        ');
     html += `<div class="match-row">
       <div class="match-player"><strong>${p.name}:</strong> ${p.text || p.desc || ''}</div>
       <select class="match-select" data-exid="${ex.id}" data-pid="${p.id}">
-        <option value="">—</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
+        <option value="">— choose —</option>
+        ${opts}
       </select>
     </div>`;
   });
