@@ -311,6 +311,203 @@ MINECRAFT_KET_INDEX = (function () {
     "data/exercises/survival-basics/ex-060.js",
     ["recycle", "回收", "nugget", "furnace", "情态动词"]
   );
+
+  // ─── 2026-06-01 Part 2 扩充（建造/怪物/材料/冒险/附魔/宠物）────────
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-061", "Match the Building Blocks", "Part 2",
+    "data/exercises/survival-basics/ex-061.js",
+    ["building", "blocks", "建造", "玻璃", "match"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-062", "What Do Mobs Drop?", "Part 2",
+    "data/exercises/mobs-creatures/ex-062.js",
+    ["mob-drops", "ender-pearl", "掉落", "match"]
+  );
+
+  add(
+    "exploration", "冒险探索",
+    "mc-ket-063", "Pack for the Adventure", "Part 2",
+    "data/exercises/exploration/ex-063.js",
+    ["adventure", "potion", "冒险", "药水", "match"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-064", "Match the Materials", "Part 2",
+    "data/exercises/survival-basics/ex-064.js",
+    ["materials", "crafting", "材料", "加工", "match"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-065", "Match the Mob Weaknesses", "Part 2",
+    "data/exercises/mobs-creatures/ex-065.js",
+    ["weakness", "strategy", "弱点", "策略", "match"]
+  );
+
+  add(
+    "exploration", "冒险探索",
+    "mc-ket-066", "Match the Story Item", "Part 2",
+    "data/exercises/exploration/ex-066.js",
+    ["story", "treasure", "故事", "探险", "match"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-067", "Match the Enchantment", "Part 2",
+    "data/exercises/survival-basics/ex-067.js",
+    ["enchantment", "tools", "附魔", "工具", "match"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-068", "Match the Pet Food", "Part 2",
+    "data/exercises/mobs-creatures/ex-068.js",
+    ["pet", "taming", "宠物", "驯服", "match"]
+  );
+  // ─── 2026-06-01 轻量级短篇（3×3 Match + 短 Part1/4）────────
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-069", "Find the Right Tool", "Part 2",
+    "data/exercises/survival-basics/ex-069.js",
+    ["tools", "工具", "pickaxe", "axe", "shovel", "3x3"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-070", "Night Survival", "Part 2",
+    "data/exercises/mobs-creatures/ex-070.js",
+    ["night", "skeleton", "creeper", "shield", "bow", "3x3"]
+  );
+
+  add(
+    "exploration", "冒险探索",
+    "mc-ket-071", "What's That Sound?", "Part 2",
+    "data/exercises/exploration/ex-071.js",
+    ["sound", "声音", "hiss", "cluck", "creeper", "3x3"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-072", "Plant a Garden", "Part 2",
+    "data/exercises/survival-basics/ex-072.js",
+    ["garden", "花园", "wheat", "pumpkin", "carrot", "3x3"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-073", "The Chest is Empty!", "Part 1",
+    "data/exercises/survival-basics/ex-073.js",
+    ["chest", "箱子", "chat", "iron", "gone"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-074", "Cave Entrance", "Part 1",
+    "data/exercises/survival-basics/ex-074.js",
+    ["cave", "洞穴", "sign", "sword", "torch"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-075", "Villager Wants to Trade", "Part 1",
+    "data/exercises/mobs-creatures/ex-075.js",
+    ["villager", "村民", "trade", "emerald", "wheat"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-076", "Lost Dog", "Part 1",
+    "data/exercises/mobs-creatures/ex-076.js",
+    ["wolf", "狼", "lost", "collar", "notice"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-077", "Smelt It!", "Part 4",
+    "data/exercises/survival-basics/ex-077.js",
+    ["smelt", "熔炼", "furnace", "iron", "ingot", "3-blank"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-078", "Time to Sleep", "Part 4",
+    "data/exercises/survival-basics/ex-078.js",
+    ["sleep", "睡觉", "night", "monster", "bed", "3-blank"]
+  );
+  // ─── 2026-06-01 短 Match 第二波（食物/交通/盔甲/村民/怪物/洞穴/动物/天气/药水/建筑）────────
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-079", "Cook Time!", "Part 2",
+    "data/exercises/survival-basics/ex-079.js",
+    ["cooking", "furnace", "campfire", "cake", "3x3"]
+  );
+
+  add(
+    "exploration", "冒险探索",
+    "mc-ket-080", "Ride or Sail", "Part 2",
+    "data/exercises/exploration/ex-080.js",
+    ["transport", "boat", "minecart", "horse", "3x3"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-081", "Match the Armor", "Part 2",
+    "data/exercises/survival-basics/ex-081.js",
+    ["armor", "leather", "iron", "diamond", "3x3"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-082", "Help the Villagers", "Part 2",
+    "data/exercises/mobs-creatures/ex-082.js",
+    ["villager", "trade", "farmer", "librarian", "butcher", "3x3"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-083", "Night Monsters", "Part 2",
+    "data/exercises/mobs-creatures/ex-083.js",
+    ["creeper", "skeleton", "enderman", "night", "3x3"]
+  );
+
+  add(
+    "exploration", "冒险探索",
+    "mc-ket-084", "Cave Treasures", "Part 2",
+    "data/exercises/exploration/ex-084.js",
+    ["ore", "redstone", "diamond", "iron", "cave", "3x3"]
+  );
+
+  add(
+    "mobs-creatures", "生物图鉴",
+    "mc-ket-085", "What Do Farm Animals Give?", "Part 2",
+    "data/exercises/mobs-creatures/ex-085.js",
+    ["farm", "sheep", "cow", "chicken", "wool", "3x3"]
+  );
+
+  add(
+    "exploration", "冒险探索",
+    "mc-ket-086", "Bad Weather", "Part 2",
+    "data/exercises/exploration/ex-086.js",
+    ["weather", "rain", "thunder", "snow", "shield", "3x3"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-087", "Magic Potions", "Part 2",
+    "data/exercises/survival-basics/ex-087.js",
+    ["potion", "leaping", "swiftness", "water-breathing", "3x3"]
+  );
+
+  add(
+    "survival-basics", "生存基础",
+    "mc-ket-088", "Building Time!", "Part 2",
+    "data/exercises/survival-basics/ex-088.js",
+    ["building", "glass", "wool", "fence", "carpet", "3x3"]
+  );
   // ----------------------------------------------------------------
   // TODO: add more entries here as you generate more exercises
   // ----------------------------------------------------------------
