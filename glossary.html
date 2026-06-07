@@ -144,6 +144,12 @@ header h1 {
   gap: 12px;
   flex-wrap: wrap;
 }
+.voice-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
 
 .search-box {
   flex: 1;
@@ -414,6 +420,7 @@ main {
 @media (max-width: 600px) {
   .toolbar { gap: 8px; padding: 8px 12px; }
   .cat-pills { gap: 6px; }
+  .voice-picker { margin-left: 0; }
   main { padding: 0 12px 60px; }
   .word-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
   .word-card { padding: 12px 13px; }
@@ -439,6 +446,14 @@ main {
   <div class="search-box">
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="搜索英文或中文…" oninput="doSearch(this.value)">
+  </div>
+  <div class="voice-picker">
+    <label for="voiceSelect" style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">🔊 发音：</label>
+    <select id="voiceSelect" onchange="onVoiceChange(this.value)" style="
+      background:var(--bg-elevated);border:1px solid var(--border);
+      border-radius:6px;color:var(--text-primary);font-size:0.75rem;
+      padding:4px 8px;max-width:140px;outline:none;cursor:pointer;
+    "></select>
   </div>
   <div class="cat-pills">
     <button class="cat-pill pill-all active" onclick="filterCat('all', this)">全部</button>
@@ -905,22 +920,117 @@ function makeCard(w) {
 
 /* ── TTS: speak a word using Web Speech API ── */
 let _activeSpeakBtn = null;
+let _selectedVoiceName = localStorage.getItem('mc-glossary-voice') || '';
+
+/** Voice quality ranking: higher = better. */
+const VOICE_PRIORITY = {
+  /* macOS premium voices — very natural */
+  'Samantha':  100,   // US English, premium
+  'Karen':      99,   // Australia, premium
+  'Alex':       98,   // US English, premium
+  'Moira':      97,   // Ireland, premium
+  'Fiona':      96,   // Scotland, premium
+  'Veena':      95,   // India, premium
+  'Ava':        98,   // US, iOS/macOS
+  'Siri':       98,   // US, iOS
+  'Allison':    97,   // US, iOS
+  'Evan':       95,   // US, iOS
+  /* macOS enhanced voices */
+  'Tom':        80,   // US, enhanced
+  'Daniel (Enhanced)': 80,
+  /* Microsoft or Chrome voices */
+  'Microsoft David':        85,
+  'Microsoft Zira':         85,
+  'Microsoft Mark':         83,
+  'Google US English':      88,
+  'Google UK English Female': 87,
+  'Google UK English Male':   85,
+  /* Default: anything with "premium" or "enhanced" in name */
+};
+
+function voiceQualityScore(v) {
+  if (!v.lang.startsWith('en')) return -1;
+  // Premium / enhanced markers
+  let score = 50;
+  const name = v.name;
+  if (VOICE_PRIORITY[name]) return VOICE_PRIORITY[name];
+  if (/premium/i.test(name)) score += 30;
+  if (/enhanced/i.test(name)) score += 25;
+  if (v.localService) score += 10;
+  // Penalise known robotic voices
+  if (/zarvox|trinoids|cellos|pipe|bahh|bells|boing|bubbles|deranged|hysterical|junior|whisper/i.test(name)) score -= 40;
+  if (/good|bad|novelty/i.test(name)) score -= 30;
+  return score;
+}
+
+function getBestVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  // If user has previously picked a voice, try to use it
+  if (_selectedVoiceName) {
+    const saved = voices.find(v => v.name === _selectedVoiceName);
+    if (saved) return saved;
+  }
+
+  // Rank all English voices and pick best
+  const ranked = voices
+    .filter(v => v.lang.startsWith('en'))
+    .sort((a, b) => voiceQualityScore(b) - voiceQualityScore(a));
+  return ranked[0] || null;
+}
+
+function buildVoicePicker() {
+  const sel = document.getElementById('voiceSelect');
+  if (!sel) return;
+
+  const voices = window.speechSynthesis.getVoices()
+    .filter(v => v.lang.startsWith('en'))
+    .sort((a, b) => voiceQualityScore(b) - voiceQualityScore(a));
+
+  sel.innerHTML = voices.map(v => {
+    const label = `${v.name} (${v.lang.slice(3,5) || 'US'})`;
+    const selected = v.name === _selectedVoiceName ? ' selected' : '';
+    return `<option value="${v.name}"${selected}>${label}</option>`;
+  }).join('');
+
+  // If no saved voice, pick the best one
+  if (!_selectedVoiceName) {
+    const best = getBestVoice();
+    if (best) {
+      _selectedVoiceName = best.name;
+      localStorage.setItem('mc-glossary-voice', best.name);
+      // Update select to match
+      if (sel.value !== best.name) sel.value = best.name;
+    }
+  }
+}
+
+function onVoiceChange(name) {
+  _selectedVoiceName = name;
+  localStorage.setItem('mc-glossary-voice', name);
+  // Preview the new voice
+  const preview = new SpeechSynthesisUtterance("Hello");
+  preview.lang = 'en-US';
+  const voices = window.speechSynthesis.getVoices();
+  const chosen = voices.find(v => v.name === name);
+  if (chosen) preview.voice = chosen;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(preview);
+}
 
 function speakWord(evt, text) {
   evt.stopPropagation();
   const btn = evt.currentTarget;
 
-  // Cancel any current speech
   window.speechSynthesis.cancel();
 
-  // If same button clicked again while speaking, just stop
   if (_activeSpeakBtn === btn) {
     _activeSpeakBtn.classList.remove('speaking');
     _activeSpeakBtn = null;
     return;
   }
 
-  // Clear previous button state
   if (_activeSpeakBtn) {
     _activeSpeakBtn.classList.remove('speaking');
     _activeSpeakBtn = null;
@@ -928,14 +1038,14 @@ function speakWord(evt, text) {
 
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang  = 'en-US';
-  utter.rate  = 0.85;   // slightly slower for kids
+  utter.rate  = 0.90;
   utter.pitch = 1.0;
 
-  // Pick an English voice if available
   const voices = window.speechSynthesis.getVoices();
-  const enVoice = voices.find(v => v.lang.startsWith('en') && v.localService) ||
-                  voices.find(v => v.lang.startsWith('en'));
-  if (enVoice) utter.voice = enVoice;
+  const chosenVoice = _selectedVoiceName
+    ? voices.find(v => v.name === _selectedVoiceName)
+    : getBestVoice();
+  if (chosenVoice) utter.voice = chosenVoice;
 
   btn.classList.add('speaking');
   _activeSpeakBtn = btn;
@@ -948,10 +1058,13 @@ function speakWord(evt, text) {
   window.speechSynthesis.speak(utter);
 }
 
-// Pre-load voices (some browsers need this)
+// Voice init — some browsers fire 'voiceschanged' late
 if (typeof speechSynthesis !== 'undefined') {
-  speechSynthesis.getVoices();
-  speechSynthesis.addEventListener('voiceschanged', () => speechSynthesis.getVoices());
+  const voices = speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    buildVoicePicker();
+  }
+  speechSynthesis.addEventListener('voiceschanged', buildVoicePicker);
 }
 
 function renderAll() {
