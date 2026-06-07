@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft 词汇大全 — Angle's Word Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-base:     #0f0f0f;
+  --bg-surface:  #181818;
+  --bg-card:     #1f1f1f;
+  --bg-elevated: #252525;
+  --bg-hover:    #2a2a2a;
+  --text-primary:   #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted:     #6a6a6a;
+  --mc-green:   #4caf50;
+  --mc-green-2: #388e3c;
+  --mc-gold:    #ffc107;
+  --mc-red:     #ef5350;
+  --mc-blue:    #42a5f5;
+  --mc-teal:    #26c6da;
+  --mc-purple:  #ab47bc;
+  --mc-orange:  #ff7043;
+  --border:         #2e2e2e;
+  --border-accent:  #3a3a3a;
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-pill: 9999px;
+  --font-ui:   'Inter', 'PingFang SC', 'Segoe UI', sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(76,175,80,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,175,80,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(180deg, #0d1f0d 0%, #0f0f0f 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 24px 24px;
+  text-align: center;
+  overflow: hidden;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--mc-green)  0px, var(--mc-green)  16px,
+    var(--mc-green-2) 16px, var(--mc-green-2) 32px,
+    #8B6914 32px, #8B6914 48px,
+    #5a5a5a 48px, #5a5a5a 64px,
+    var(--mc-green) 64px
+  );
+}
+.header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mc-green);
+  margin-bottom: 8px;
+}
+header h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 30%, var(--mc-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.header-sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.header-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nav-btn {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-accent);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.nav-btn:hover { background: var(--bg-elevated); color: var(--text-primary); border-color: #4a4a4a; }
+.nav-btn.active { background: var(--mc-green); border-color: var(--mc-green); color: #000; box-shadow: 0 0 12px rgba(76,175,80,0.4); }
+
+/* ── TOOLBAR ── */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,15,15,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px 0 38px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-box input:focus { border-color: var(--mc-green); }
+.search-box input::placeholder { color: var(--text-muted); }
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.cat-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.cat-pill {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-accent);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.cat-pill:hover { background: var(--bg-elevated); color: var(--text-primary); }
+.cat-pill.active { color: #000; box-shadow: 0 0 12px rgba(0,0,0,0.3); }
+
+.pill-tools.active    { background: #ff7043; border-color: #ff7043; }
+.pill-mobs.active     { background: #ef5350; border-color: #ef5350; }
+.pill-animals.active  { background: #4caf50; border-color: #4caf50; }
+.pill-blocks.active   { background: #8d6e63; border-color: #8d6e63; }
+.pill-ores.active     { background: #42a5f5; border-color: #42a5f5; }
+.pill-food.active     { background: #ffc107; border-color: #ffc107; }
+.pill-armor.active    { background: #78909c; border-color: #78909c; }
+.pill-nature.active   { background: #66bb6a; border-color: #66bb6a; }
+.pill-nether.active   { background: #bf360c; border-color: #bf360c; }
+.pill-end.active      { background: #7e57c2; border-color: #7e57c2; }
+.pill-potions.active  { background: #ab47bc; border-color: #ab47bc; }
+.pill-commands.active { background: #26c6da; border-color: #26c6da; }
+.pill-all.active      { background: var(--mc-green); border-color: var(--mc-green); }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  padding: 8px 24px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.stats-bar strong { color: var(--mc-green); }
+
+/* ── CONTENT ── */
+main {
+  position: relative;
+  z-index: 1;
+  padding: 0 24px 60px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── CATEGORY SECTION ── */
+.cat-section {
+  margin-top: 32px;
+}
+.cat-section.hidden { display: none; }
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cat-icon { font-size: 1.8rem; }
+.cat-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.cat-subtitle { font-size: 0.82rem; color: var(--text-secondary); }
+.cat-count {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+}
+
+/* ── WORD GRID ── */
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+/* ── WORD CARD ── */
+.word-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  cursor: default;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.word-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+  background: var(--card-accent, var(--mc-green));
+}
+.word-card:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.word-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.word-en {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+.word-zh {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mc-gold);
+}
+.word-note {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.word-tip {
+  font-size: 0.72rem;
+  color: var(--mc-green);
+  background: rgba(76,175,80,0.08);
+  border-radius: 4px;
+  padding: 3px 6px;
+  margin-top: 2px;
+  display: none;
+}
+.word-card:hover .word-tip { display: block; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state .emoji { font-size: 3rem; }
+.empty-state p { margin-top: 12px; font-size: 0.9rem; }
+
+/* ── SCROLL TO TOP ── */
+#scrollTop {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--mc-green);
+  border: none;
+  color: #000;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(76,175,80,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#scrollTop.show { opacity: 1; pointer-events: all; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .toolbar { gap: 8px; padding: 8px 12px; }
+  .cat-pills { gap: 6px; }
+  main { padding: 0 12px 60px; }
+  .word-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .word-card { padding: 12px 13px; }
+  .word-en { font-size: 0.85rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="header-eyebrow">⛏ Angle's Word Bank</div>
+  <h1>Minecraft 中英文词汇大全</h1>
+  <p class="header-sub">玩英文版 Minecraft 必备词汇 · 按分类学习 · 鼠标悬停查看游戏提示</p>
+  <div class="header-nav">
+    <a href="index.html" class="nav-btn">📖 KET 练习题</a>
+    <span class="nav-btn active">📚 词汇大全</span>
+  </div>
+</header>
+
+<!-- ══ TOOLBAR ══ -->
+<div class="toolbar">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="搜索英文或中文…" oninput="doSearch(this.value)">
+  </div>
+  <div class="cat-pills">
+    <button class="cat-pill pill-all active" onclick="filterCat('all', this)">全部</button>
+    <button class="cat-pill pill-tools" onclick="filterCat('tools', this)">⚒️ 工具武器</button>
+    <button class="cat-pill pill-armor" onclick="filterCat('armor', this)">🛡️ 盔甲防具</button>
+    <button class="cat-pill pill-mobs" onclick="filterCat('mobs', this)">👾 怪物</button>
+    <button class="cat-pill pill-animals" onclick="filterCat('animals', this)">🐄 动物</button>
+    <button class="cat-pill pill-blocks" onclick="filterCat('blocks', this)">🧱 建筑方块</button>
+    <button class="cat-pill pill-ores" onclick="filterCat('ores', this)">💎 矿石资源</button>
+    <button class="cat-pill pill-food" onclick="filterCat('food', this)">🍖 食物</button>
+    <button class="cat-pill pill-nature" onclick="filterCat('nature', this)">🌿 自然地形</button>
+    <button class="cat-pill pill-nether" onclick="filterCat('nether', this)">🔥 下界</button>
+    <button class="cat-pill pill-end" onclick="filterCat('end', this)">🌌 末地</button>
+    <button class="cat-pill pill-potions" onclick="filterCat('potions', this)">🧪 药水</button>
+    <button class="cat-pill pill-commands" onclick="filterCat('commands', this)">💻 设置指令</button>
+  </div>
+</div>
+
+<!-- ── stats ── -->
+<div class="stats-bar" id="statsBar">
+  共 <strong id="visibleCount">0</strong> 个词汇
+</div>
+
+<!-- ══ MAIN ══ -->
+<main id="mainContent">
+
+  <!-- ═══ 工具武器 ═══ -->
+  <section class="cat-section" data-cat="tools" id="sec-tools">
+    <div class="cat-header">
+      <span class="cat-icon">⚒️</span>
+      <div>
+        <div class="cat-title">工具 &amp; 武器</div>
+        <div class="cat-subtitle">Tools &amp; Weapons</div>
+      </div>
+      <span class="cat-count" id="cnt-tools"></span>
+    </div>
+    <div class="word-grid" id="grid-tools"></div>
+  </section>
+
+  <!-- ═══ 盔甲防具 ═══ -->
+  <section class="cat-section" data-cat="armor" id="sec-armor">
+    <div class="cat-header">
+      <span class="cat-icon">🛡️</span>
+      <div>
+        <div class="cat-title">盔甲 &amp; 防具</div>
+        <div class="cat-subtitle">Armor &amp; Defense</div>
+      </div>
+      <span class="cat-count" id="cnt-armor"></span>
+    </div>
+    <div class="word-grid" id="grid-armor"></div>
+  </section>
+
+  <!-- ═══ 怪物 ═══ -->
+  <section class="cat-section" data-cat="mobs" id="sec-mobs">
+    <div class="cat-header">
+      <span class="cat-icon">👾</span>
+      <div>
+        <div class="cat-title">怪物 (敌对生物)</div>
+        <div class="cat-subtitle">Hostile Mobs</div>
+      </div>
+      <span class="cat-count" id="cnt-mobs"></span>
+    </div>
+    <div class="word-grid" id="grid-mobs"></div>
+  </section>
+
+  <!-- ═══ 动物 ═══ -->
+  <section class="cat-section" data-cat="animals" id="sec-animals">
+    <div class="cat-header">
+      <span class="cat-icon">🐄</span>
+      <div>
+        <div class="cat-title">动物 (友好生物)</div>
+        <div class="cat-subtitle">Passive &amp; Neutral Mobs</div>
+      </div>
+      <span class="cat-count" id="cnt-animals"></span>
+    </div>
+    <div class="word-grid" id="grid-animals"></div>
+  </section>
+
+  <!-- ═══ 建筑方块 ═══ -->
+  <section class="cat-section" data-cat="blocks" id="sec-blocks">
+    <div class="cat-header">
+      <span class="cat-icon">🧱</span>
+      <div>
+        <div class="cat-title">建筑方块</div>
+        <div class="cat-subtitle">Building Blocks</div>
+      </div>
+      <span class="cat-count" id="cnt-blocks"></span>
+    </div>
+    <div class="word-grid" id="grid-blocks"></div>
+  </section>
+
+  <!-- ═══ 矿石资源 ═══ -->
+  <section class="cat-section" data-cat="ores" id="sec-ores">
+    <div class="cat-header">
+      <span class="cat-icon">💎</span>
+      <div>
+        <div class="cat-title">矿石 &amp; 资源</div>
+        <div class="cat-subtitle">Ores &amp; Resources</div>
+      </div>
+      <span class="cat-count" id="cnt-ores"></span>
+    </div>
+    <div class="word-grid" id="grid-ores"></div>
+  </section>
+
+  <!-- ═══ 食物 ═══ -->
+  <section class="cat-section" data-cat="food" id="sec-food">
+    <div class="cat-header">
+      <span class="cat-icon">🍖</span>
+      <div>
+        <div class="cat-title">食物 &amp; 饮品</div>
+        <div class="cat-subtitle">Food &amp; Drinks</div>
+      </div>
+      <span class="cat-count" id="cnt-food"></span>
+    </div>
+    <div class="word-grid" id="grid-food"></div>
+  </section>
+
+  <!-- ═══ 自然地形 ═══ -->
+  <section class="cat-section" data-cat="nature" id="sec-nature">
+    <div class="cat-header">
+      <span class="cat-icon">🌿</span>
+      <div>
+        <div class="cat-title">自然 &amp; 地形</div>
+        <div class="cat-subtitle">Nature &amp; Biomes</div>
+      </div>
+      <span class="cat-count" id="cnt-nature"></span>
+    </div>
+    <div class="word-grid" id="grid-nature"></div>
+  </section>
+
+  <!-- ═══ 下界 ═══ -->
+  <section class="cat-section" data-cat="nether" id="sec-nether">
+    <div class="cat-header">
+      <span class="cat-icon">🔥</span>
+      <div>
+        <div class="cat-title">下界 (地狱)</div>
+        <div class="cat-subtitle">The Nether</div>
+      </div>
+      <span class="cat-count" id="cnt-nether"></span>
+    </div>
+    <div class="word-grid" id="grid-nether"></div>
+  </section>
+
+  <!-- ═══ 末地 ═══ -->
+  <section class="cat-section" data-cat="end" id="sec-end">
+    <div class="cat-header">
+      <span class="cat-icon">🌌</span>
+      <div>
+        <div class="cat-title">末地</div>
+        <div class="cat-subtitle">The End</div>
+      </div>
+      <span class="cat-count" id="cnt-end"></span>
+    </div>
+    <div class="word-grid" id="grid-end"></div>
+  </section>
+
+  <!-- ═══ 药水 ═══ -->
+  <section class="cat-section" data-cat="potions" id="sec-potions">
+    <div class="cat-header">
+      <span class="cat-icon">🧪</span>
+      <div>
+        <div class="cat-title">药水 &amp; 附魔</div>
+        <div class="cat-subtitle">Potions &amp; Enchantments</div>
+      </div>
+      <span class="cat-count" id="cnt-potions"></span>
+    </div>
+    <div class="word-grid" id="grid-potions"></div>
+  </section>
+
+  <!-- ═══ 设置指令 ═══ -->
+  <section class="cat-section" data-cat="commands" id="sec-commands">
+    <div class="cat-header">
+      <span class="cat-icon">💻</span>
+      <div>
+        <div class="cat-title">界面 &amp; 设置 &amp; 指令</div>
+        <div class="cat-subtitle">UI, Settings &amp; Commands</div>
+      </div>
+      <span class="cat-count" id="cnt-commands"></span>
+    </div>
+    <div class="word-grid" id="grid-commands"></div>
+  </section>
+
+  <!-- 空状态 -->
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="emoji">🔍</div>
+    <p>没有找到相关词汇，换个关键词试试吧！</p>
+  </div>
+
+</main>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ══════════════════════════════════════
+   GLOSSARY DATA
+   格式: { en, zh, note, tip, emoji, cat }
+   ══════════════════════════════════════ */
+const WORDS = [
+
+  // ═══════════════════════════════
+  // TOOLS & WEAPONS
+  // ═══════════════════════════════
+  { cat:'tools', emoji:'⛏️', en:'Pickaxe',       zh:'镐',        note:'用来挖石头和矿石', tip:'石镐能挖铁矿，铁镐能挖金矿和钻石！' },
+  { cat:'tools', emoji:'🪓', en:'Axe',            zh:'斧头',      note:'用来砍树，比手快很多', tip:'斧头也能当武器，伤害比剑高！' },
+  { cat:'tools', emoji:'🪣', en:'Shovel',         zh:'铲子',      note:'用来挖土、沙子、砾石', tip:'对着草地右键可以做小路（Path）！' },
+  { cat:'tools', emoji:'🌿', en:'Hoe',            zh:'锄头',      note:'用来耕地，为种植做准备', tip:'用锄头对土地右键变成耕地再播种！' },
+  { cat:'tools', emoji:'🎣', en:'Fishing Rod',    zh:'钓鱼竿',    note:'在水里钓鱼用的', tip:'不只能钓鱼，还能钓到宝藏或垃圾！' },
+  { cat:'tools', emoji:'✂️', en:'Shears',         zh:'剪刀',      note:'用来剪羊毛，不会伤害羊', tip:'剪刀能破坏蜘蛛网而不损坏物品！' },
+  { cat:'tools', emoji:'🪣', en:'Bucket',         zh:'桶',        note:'可以装水、熔岩或牛奶', tip:'用桶喝牛奶可以消除所有药水效果！' },
+  { cat:'tools', emoji:'🧭', en:'Compass',        zh:'指南针',    note:'指向你的出生点', tip:'磁化后的指南针指向指定地点！' },
+  { cat:'tools', emoji:'⌚', en:'Clock',          zh:'时钟',      note:'显示游戏内的时间', tip:'在夜晚挖矿时用时钟判断白天何时到来！' },
+  { cat:'tools', emoji:'💥', en:'Flint and Steel',zh:'打火石',    note:'点燃方块或点燃地狱传送门', tip:'用打火石激活下界传送门！' },
+  { cat:'tools', emoji:'⚔️', en:'Sword',          zh:'剑',        note:'最常用的近战武器', tip:'剑格挡伤害的效率高于盾牌（不消耗耐久）！' },
+  { cat:'tools', emoji:'🏹', en:'Bow',            zh:'弓',        note:'远程攻击武器，需要箭', tip:'拉满弓造成最大伤害！' },
+  { cat:'tools', emoji:'🏹', en:'Crossbow',       zh:'弩',        note:'比弓威力更大，但装填慢', tip:'弩可以预先装填，随时射击！' },
+  { cat:'tools', emoji:'🔱', en:'Trident',        zh:'三叉戟',    note:'可投掷也可近战的特殊武器', tip:'附魔"忠诚"后，投出去会飞回来！' },
+  { cat:'tools', emoji:'🪃', en:'Mace',           zh:'重锤',      note:'从高处落下攻击伤害翻倍', tip:'这是 1.21 版本加入的新武器！' },
+  { cat:'tools', emoji:'🔶', en:'Arrow',          zh:'箭',        note:'弓和弩的弹药', tip:'可以用药水制作药箭，造成特殊效果！' },
+  { cat:'tools', emoji:'🎇', en:'Tipped Arrow',   zh:'药箭',      note:'箭头上带有药水效果', tip:'箭射中敌人会附加对应药水的效果！' },
+  { cat:'tools', emoji:'💣', en:'TNT',            zh:'炸药',      note:'爆炸方块，破坏面积很大', tip:'用打火石点燃 TNT，快跑！' },
+
+  // ═══════════════════════════════
+  // ARMOR & DEFENSE
+  // ═══════════════════════════════
+  { cat:'armor', emoji:'🪖', en:'Helmet',         zh:'头盔',      note:'戴在头上的防具', tip:'水下呼吸附魔可以加在头盔上！' },
+  { cat:'armor', emoji:'🥼', en:'Chestplate',     zh:'胸甲',      note:'穿在身上的防具，保护最强', tip:'保护III附魔放在胸甲上效果最好！' },
+  { cat:'armor', emoji:'👖', en:'Leggings',       zh:'护腿',      note:'腿部防护装备', tip:'荆棘附魔+护腿伤害反弹给攻击者！' },
+  { cat:'armor', emoji:'👟', en:'Boots',          zh:'靴子',      note:'脚部防护，可以穿越细雪', tip:'穿皮靴才不会陷进"细雪"方块里！' },
+  { cat:'armor', emoji:'🛡️', en:'Shield',         zh:'盾牌',      note:'左手持盾可以格挡攻击', tip:'格挡苦力怕爆炸可以减少大量伤害！' },
+  { cat:'armor', emoji:'🟤', en:'Leather Armor',  zh:'皮甲',      note:'最弱的盔甲，用皮革制作', tip:'新手第一天就能做，防护聊胜于无！' },
+  { cat:'armor', emoji:'⚙️', en:'Iron Armor',     zh:'铁甲',      note:'中级防护，铁锭制作', tip:'大多数日常战斗穿铁甲就够用了！' },
+  { cat:'armor', emoji:'🟡', en:'Golden Armor',   zh:'金甲',      note:'很脆，但猪灵不会攻击你', tip:'去下界记得穿至少一件金甲！' },
+  { cat:'armor', emoji:'💎', en:'Diamond Armor',  zh:'钻石甲',    note:'最强普通盔甲，保护值极高', tip:'钻石甲穿满减少80%伤害！' },
+  { cat:'armor', emoji:'🔮', en:'Netherite Armor',zh:'下界合金甲',note:'游戏最强盔甲，还能防熔岩', tip:'掉进熔岩也不会烧毁！' },
+  { cat:'armor', emoji:'🐢', en:'Turtle Shell',   zh:'海龟壳',    note:'特殊头盔，提供水下呼吸', tip:'戴上后水下多10秒呼吸时间！' },
+
+  // ═══════════════════════════════
+  // HOSTILE MOBS (怪物)
+  // ═══════════════════════════════
+  { cat:'mobs', emoji:'🧟', en:'Zombie',          zh:'僵尸',      note:'夜晚出现，白天着火', tip:'村庄被攻击时会变成"村民僵尸"！' },
+  { cat:'mobs', emoji:'💀', en:'Skeleton',        zh:'骷髅',      note:'会射箭的骨头怪物', tip:'用火焰箭烧骷髅，它会从箭上掉落！' },
+  { cat:'mobs', emoji:'💚', en:'Creeper',         zh:'苦力怕',    note:'绿色怪物，靠近爆炸！', tip:'猫咪会把苦力怕吓跑！' },
+  { cat:'mobs', emoji:'🕷️', en:'Spider',          zh:'蜘蛛',      note:'白天中立，夜晚攻击', tip:'蜘蛛能爬墙！用围栏加悬挑来防止！' },
+  { cat:'mobs', emoji:'🔮', en:'Enderman',        zh:'末影人',    note:'高大黑色，传送移动，别盯着它', tip:'戴南瓜头就不会激怒末影人！' },
+  { cat:'mobs', emoji:'👻', en:'Phantom',         zh:'幻翼',      note:'不睡觉会被它攻击', tip:'连续3天不睡觉幻翼就会出现！' },
+  { cat:'mobs', emoji:'🐟', en:'Drowned',         zh:'溺尸',      note:'水下的僵尸变种，可能持三叉戟', tip:'在水下遇到溺尸要赶快游上来！' },
+  { cat:'mobs', emoji:'🔥', en:'Blaze',           zh:'烈焰人',    note:'下界堡垒的守卫，投掷火球', tip:'打死烈焰人获得合成药水的烈焰棒！' },
+  { cat:'mobs', emoji:'💀', en:'Wither Skeleton', zh:'凋灵骷髅',  note:'高大骷髅，攻击附加凋灵效果', tip:'需要3个头骷髅来召唤凋灵Boss！' },
+  { cat:'mobs', emoji:'🪼', en:'Shulker',         zh:'潜影贝',    note:'末地城里的方块怪物，反重力', tip:'被它打中会飘浮空中！' },
+  { cat:'mobs', emoji:'🧙', en:'Witch',           zh:'女巫',      note:'投掷药水攻击，有时出现在小屋', tip:'击杀女巫有概率掉落各种药水！' },
+  { cat:'mobs', emoji:'👁️', en:'Guardian',        zh:'守卫者',    note:'海底神殿的守卫，激光攻击', tip:'用毒药水杀守卫者可以获得经验！' },
+  { cat:'mobs', emoji:'🔊', en:'Warden',          zh:'监守者',    note:'深暗之域的强力怪，靠声音感知', tip:'在它附近要蹲走，不要跑！' },
+  { cat:'mobs', emoji:'🐺', en:'Ravager',         zh:'劫掠兽',    note:'袭击时骑手骑乘的大型怪物', tip:'伤害极高，用弓远程攻击！' },
+  { cat:'mobs', emoji:'🦂', en:'Cave Spider',     zh:'洞穴蜘蛛',  note:'废弃矿井里的小型蜘蛛，带毒', tip:'喝牛奶解毒！' },
+  { cat:'mobs', emoji:'💨', en:'Ghast',           zh:'恶魂',      note:'下界的飞行怪，发射火球', tip:'用剑反弹火球打回去可以击杀！' },
+
+  // ═══════════════════════════════
+  // PASSIVE / NEUTRAL ANIMALS (动物)
+  // ═══════════════════════════════
+  { cat:'animals', emoji:'🐄', en:'Cow',          zh:'牛',        note:'掉落牛肉和皮革，可挤牛奶', tip:'用桶对着牛右键就能挤牛奶！' },
+  { cat:'animals', emoji:'🐷', en:'Pig',          zh:'猪',        note:'掉落猪排，可以骑乘（需鞍+胡萝卜钓竿）', tip:'骑猪用胡萝卜钓竿控制方向！' },
+  { cat:'animals', emoji:'🐑', en:'Sheep',        zh:'羊',        note:'用剪刀获取羊毛，可以染色', tip:'用染料给羊染色后剪毛也是彩色的！' },
+  { cat:'animals', emoji:'🐔', en:'Chicken',      zh:'鸡',        note:'掉落羽毛和生鸡肉，会下蛋', tip:'建一个鸡场，用蛋孵化更多小鸡！' },
+  { cat:'animals', emoji:'🐇', en:'Rabbit',       zh:'兔子',      note:'掉落兔皮和兔肉，跳得很快', tip:'用胡萝卜或蒲公英引诱兔子！' },
+  { cat:'animals', emoji:'🐺', en:'Wolf',         zh:'狼',        note:'用骨头驯服，驯服后变成狗', tip:'狗会自动攻击你攻击的目标！' },
+  { cat:'animals', emoji:'🐱', en:'Cat',          zh:'猫',        note:'用生鱼驯服，能让苦力怕逃跑', tip:'家里养一只猫，苦力怕不敢靠近！' },
+  { cat:'animals', emoji:'🦙', en:'Llama',        zh:'羊驼',      note:'可以放货包，会吐口水攻击', tip:'拴在一起的羊驼会组成商队！' },
+  { cat:'animals', emoji:'🐴', en:'Horse',        zh:'马',        note:'驯服后用鞍骑乘，跑得很快', tip:'金苹果或金胡萝卜可以让马更快成熟！' },
+  { cat:'animals', emoji:'🐟', en:'Cod',          zh:'鳕鱼',      note:'钓鱼或杀死获得，可以喂猫', tip:'烤熟的鳕鱼比生的多恢复饥饿值！' },
+  { cat:'animals', emoji:'🐟', en:'Salmon',       zh:'鲑鱼',      note:'钓鱼获得，也能驯服猫和熊', tip:'北极熊最喜欢吃鲑鱼！' },
+  { cat:'animals', emoji:'🦅', en:'Parrot',       zh:'鹦鹉',      note:'热带丛林里的鸟，模仿怪物叫声', tip:'饼干有毒！用种子驯服鹦鹉！' },
+  { cat:'animals', emoji:'🐢', en:'Turtle',       zh:'海龟',      note:'海滩上的生物，掉落海龟壳碎片', tip:'集齐5块碎片合成海龟壳当头盔！' },
+  { cat:'animals', emoji:'🦊', en:'Fox',          zh:'狐狸',      note:'喜欢叼着东西，给它甜浆果驯服', tip:'用绳子拴住两只狐狸繁殖的宝宝才会信任你！' },
+  { cat:'animals', emoji:'🐼', en:'Panda',        zh:'熊猫',      note:'稀有动物，用竹子喂食', tip:'竹林里才能找到熊猫！' },
+  { cat:'animals', emoji:'🌊', en:'Axolotl',      zh:'美西螈',    note:'水下生物，帮你打守卫者', tip:'用桶装起来带进海底神殿，它会帮你战斗！' },
+  { cat:'animals', emoji:'🐝', en:'Bee',          zh:'蜜蜂',      note:'花朵和蜂箱附近，攻击会死', tip:'蜂蜜瓶可以解毒并恢复饥饿值！' },
+
+  // ═══════════════════════════════
+  // BUILDING BLOCKS (建筑方块)
+  // ═══════════════════════════════
+  { cat:'blocks', emoji:'🟫', en:'Wood Planks',   zh:'木板',      note:'最基础的建筑材料，由原木制成', tip:'一块原木可以做4块木板！' },
+  { cat:'blocks', emoji:'🪨', en:'Stone',         zh:'石头',      note:'用石镐挖得到，建造最常用', tip:'烧圆石得到石头（Stone）！' },
+  { cat:'blocks', emoji:'🟦', en:'Glass',         zh:'玻璃',      note:'熔炼沙子获得，可以做窗户', tip:'可以用染料做彩色玻璃！' },
+  { cat:'blocks', emoji:'🧱', en:'Brick',         zh:'砖块',      note:'烧泥土得到粘土砖，再合成', tip:'泥土→加热→粘土砖→4个合成1块砖！' },
+  { cat:'blocks', emoji:'🪵', en:'Oak Log',       zh:'橡木原木',  note:'砍橡树得到，可以做木板', tip:'原木可以在工作台制作4种木材产品！' },
+  { cat:'blocks', emoji:'🌲', en:'Spruce Log',    zh:'云杉原木',  note:'针叶林的树，颜色更深', tip:'云杉原木做出来的木板更深沉！' },
+  { cat:'blocks', emoji:'🌴', en:'Jungle Log',    zh:'丛林原木',  note:'热带丛林的大树', tip:'丛林树非常高，可以找到可可豆！' },
+  { cat:'blocks', emoji:'🟫', en:'Cobblestone',   zh:'圆石',      note:'挖石头得到，超实用建材', tip:'圆石是最常用的建筑材料之一！' },
+  { cat:'blocks', emoji:'🪨', en:'Smooth Stone',  zh:'光滑石头',  note:'再次熔炼圆石得到', tip:'光滑石头做出的墙更整齐好看！' },
+  { cat:'blocks', emoji:'⬜', en:'Sand',          zh:'沙子',      note:'沙漠和海滩常见，受重力影响', tip:'沙子会掉落，不能悬空！' },
+  { cat:'blocks', emoji:'🟧', en:'Sandstone',     zh:'砂岩',      note:'4块沙子合成，不受重力影响', tip:'沙漠神殿和村庄常见砂岩建筑！' },
+  { cat:'blocks', emoji:'🟦', en:'Glass Pane',    zh:'玻璃板',    note:'薄玻璃，做窗户用', tip:'玻璃板比玻璃块更省材料！' },
+  { cat:'blocks', emoji:'🟧', en:'Wool',          zh:'羊毛',      note:'剪羊获得，可染色，隔音', tip:'16种颜色羊毛，任意搭配做彩色地毯！' },
+  { cat:'blocks', emoji:'🪵', en:'Fence',         zh:'栅栏',      note:'木棍制作，动物无法跳过', tip:'栅栏门（Fence Gate）可以像门一样开关！' },
+  { cat:'blocks', emoji:'🪞', en:'Bookshelf',     zh:'书架',      note:'增强附魔台效果', tip:'附魔台周围放15个书架，获得最高级附魔！' },
+  { cat:'blocks', emoji:'🪜', en:'Ladder',        zh:'梯子',      note:'贴墙爬上爬下', tip:'梯子也能放在矿井里，方便上下！' },
+  { cat:'blocks', emoji:'🚪', en:'Door',          zh:'门',        note:'木门/铁门，需要右键或红石开', tip:'铁门必须用按钮或拉杆才能打开！' },
+  { cat:'blocks', emoji:'🪣', en:'Chest',         zh:'箱子',      note:'储存物品，两个拼在一起变大箱', tip:'两个箱子相邻合并成大箱子！' },
+  { cat:'blocks', emoji:'🔥', en:'Furnace',       zh:'熔炉',      note:'冶炼矿石、烹饪食物', tip:'高炉速度是普通熔炉的2倍！' },
+  { cat:'blocks', emoji:'🛠️', en:'Crafting Table',zh:'工作台',    note:'3×3合成界面，制作所有物品', tip:'在野外放下工作台可以随地合成！' },
+  { cat:'blocks', emoji:'🛏️', en:'Bed',           zh:'床',        note:'睡觉跳过夜晚，设置出生点', tip:'多人游戏时睡觉需要所有玩家同意！' },
+  { cat:'blocks', emoji:'🕯️', en:'Torch',         zh:'火把',      note:'照明，防止怪物生成', tip:'地下每隔几格放一个火把防止黑暗刷怪！' },
+  { cat:'blocks', emoji:'💡', en:'Lantern',       zh:'灯笼',      note:'比火把更亮，可悬挂', tip:'悬挂灯笼需要从方块下面放置！' },
+  { cat:'blocks', emoji:'🔴', en:'Redstone',      zh:'红石',      note:'制作电路，让机器运转', tip:'红石粉连接开关和活塞可以做自动门！' },
+  { cat:'blocks', emoji:'⬜', en:'Piston',        zh:'活塞',      note:'红石驱动，推动方块移动', tip:'粘性活塞可以把方块拉回来！' },
+
+  // ═══════════════════════════════
+  // ORES & RESOURCES (矿石/资源)
+  // ═══════════════════════════════
+  { cat:'ores', emoji:'⬛', en:'Coal',            zh:'煤炭',      note:'最常见燃料，地表附近就有', tip:'煤炭可以做火把（8个火把/组）！' },
+  { cat:'ores', emoji:'⚙️', en:'Iron Ore',        zh:'铁矿石',    note:'用铁镐挖，熔炼得铁锭', tip:'铁锭用途最广，优先收集！' },
+  { cat:'ores', emoji:'🟡', en:'Gold Ore',        zh:'金矿石',    note:'用铁镐挖，黄金用途有限', tip:'猪灵最喜欢金物品，可以用来交易！' },
+  { cat:'ores', emoji:'💎', en:'Diamond Ore',     zh:'钻石矿石',  note:'Y=−58最多，极稀有', tip:'用时运III附魔的镐挖，最多4颗！' },
+  { cat:'ores', emoji:'💚', en:'Emerald Ore',     zh:'绿宝石矿',  note:'极山地群系专属矿', tip:'绿宝石是和村民交易的货币！' },
+  { cat:'ores', emoji:'🔴', en:'Redstone Ore',    zh:'红石矿石',  note:'Y=−58附近多，做电路', tip:'挖红石矿石会掉落4-5粒红石粉！' },
+  { cat:'ores', emoji:'🟦', en:'Lapis Lazuli',    zh:'青金石',    note:'蓝色矿石，附魔必备', tip:'附魔台消耗青金石作为材料！' },
+  { cat:'ores', emoji:'🪨', en:'Netherite Scrap', zh:'下界合金碎片',note:'在下界的远古残骸里获取', tip:'4个碎片+4个金锭=1个下界合金锭！' },
+  { cat:'ores', emoji:'🪵', en:'Ancient Debris',  zh:'远古残骸',  note:'下界Y=15附近，防爆又防熔岩', tip:'用炸药或床爆炸快速挖！' },
+  { cat:'ores', emoji:'🪨', en:'Gravel',          zh:'砾石',      note:'受重力影响，有概率掉燧石', tip:'时运附魔可提高燧石掉落率到100%！' },
+  { cat:'ores', emoji:'🌿', en:'Flint',           zh:'燧石',      note:'从砾石掉落，制作箭矢必用', tip:'燧石+棍+羽毛=箭！' },
+  { cat:'ores', emoji:'🟫', en:'Clay',            zh:'粘土',      note:'水下淤泥中挖取', tip:'粘土烧成砖块，再合成砖方块！' },
+  { cat:'ores', emoji:'🌿', en:'Sugar Cane',      zh:'甘蔗',      note:'河边生长，做纸张和糖', tip:'三根甘蔗横向合成3张纸！' },
+  { cat:'ores', emoji:'🌙', en:'Glowstone Dust',  zh:'萤石粉',    note:'砸碎萤石（下界）获得', tip:'4粒粉合成1个萤石方块，亮度最高！' },
+  { cat:'ores', emoji:'⚫', en:'Obsidian',        zh:'黑曜石',    note:'熔岩遇水形成，最硬方块之一', tip:'需要钻石镐才能挖！12块黑曜石做传送门！' },
+
+  // ═══════════════════════════════
+  // FOOD (食物)
+  // ═══════════════════════════════
+  { cat:'food', emoji:'🥩', en:'Steak',           zh:'熟牛排',    note:'烤熟的牛肉，恢复4格饱食度', tip:'是性价比最高的食物之一！' },
+  { cat:'food', emoji:'🥩', en:'Raw Beef',        zh:'生牛肉',    note:'杀死牛掉落，需要烤熟', tip:'直接吃会中饥饿效果！' },
+  { cat:'food', emoji:'🍖', en:'Cooked Porkchop', zh:'熟猪排',    note:'烤熟的猪肉', tip:'和熟牛排一样，恢复4格饱食度！' },
+  { cat:'food', emoji:'🍗', en:'Cooked Chicken',  zh:'熟鸡肉',    note:'烤熟的鸡肉', tip:'生鸡肉有概率导致饥饿！' },
+  { cat:'food', emoji:'🍞', en:'Bread',           zh:'面包',      note:'3根小麦合成，较常见', tip:'村民交易可以获得面包！' },
+  { cat:'food', emoji:'🎂', en:'Cake',            zh:'蛋糕',      note:'放在地上一口口吃，可以分享', tip:'蛋糕是唯一可以和朋友分享的食物！' },
+  { cat:'food', emoji:'🍎', en:'Apple',           zh:'苹果',      note:'橡树叶子偶尔掉落', tip:'金苹果可以驯服濒死的马！' },
+  { cat:'food', emoji:'🍑', en:'Golden Apple',    zh:'金苹果',    note:'苹果+8金锭，提供特殊效果', tip:'附魔金苹果是游戏里最稀有食物！' },
+  { cat:'food', emoji:'🥕', en:'Carrot',          zh:'胡萝卜',    note:'从僵尸或田地获取，驯马用', tip:'金胡萝卜是最佳饱食度食物！' },
+  { cat:'food', emoji:'🥔', en:'Potato',          zh:'马铃薯',    note:'从村庄农田获取，需要烤熟', tip:'烤马铃薯恢复5格饱食度！' },
+  { cat:'food', emoji:'🎃', en:'Pumpkin Pie',     zh:'南瓜派',    note:'糖+蛋+南瓜合成', tip:'非常好做且满足感高！' },
+  { cat:'food', emoji:'🍣', en:'Cooked Salmon',   zh:'熟鲑鱼',    note:'烤熟的鲑鱼', tip:'猫最喜欢生鱼，不过别喂它们熟的！' },
+  { cat:'food', emoji:'🍬', en:'Sugar',           zh:'糖',        note:'甘蔗制作，做蛋糕和药水', tip:'糖也是速度药水的材料！' },
+  { cat:'food', emoji:'🍯', en:'Honey Bottle',    zh:'蜂蜜瓶',    note:'蜂箱获取，解毒', tip:'喝蜂蜜可以解除中毒效果！' },
+  { cat:'food', emoji:'🌾', en:'Wheat',           zh:'小麦',      note:'种麦子收割，做面包和蛋糕', tip:'小麦也可以吸引和繁殖牛、羊、猪！' },
+
+  // ═══════════════════════════════
+  // NATURE & BIOMES (自然地形)
+  // ═══════════════════════════════
+  { cat:'nature', emoji:'🌲', en:'Forest',        zh:'森林',      note:'树木繁多的生物群系', tip:'橡树、桦树在森林最常见！' },
+  { cat:'nature', emoji:'🏔️', en:'Mountain',      zh:'山地',      note:'高耸的地形，绿宝石矿多', tip:'山地越高越容易找到绿宝石！' },
+  { cat:'nature', emoji:'🏜️', en:'Desert',        zh:'沙漠',      note:'满地沙子，有神殿和村庄', tip:'沙漠里面有沙漠神殿，里面有宝箱！' },
+  { cat:'nature', emoji:'❄️', en:'Tundra',        zh:'冻原',      note:'寒冷雪地生物群系', tip:'冰雪生物群系里才有北极熊！' },
+  { cat:'nature', emoji:'🌊', en:'Ocean',         zh:'海洋',      note:'广阔水域，有海洋神殿', tip:'海洋里有美西螈（Axolotl）！' },
+  { cat:'nature', emoji:'🌿', en:'Jungle',        zh:'丛林',      note:'热带，有丛林神庙和鹦鹉', tip:'丛林里能找到可可豆和竹子！' },
+  { cat:'nature', emoji:'🌾', en:'Plains',        zh:'平原',      note:'平坦、常见村庄，适合建基地', tip:'平原是新手最好的起始地形！' },
+  { cat:'nature', emoji:'🍄', en:'Mushroom Island',zh:'蘑菇岛',   note:'稀有岛屿，没有怪物出现', tip:'蘑菇岛是游戏里最安全的地方！' },
+  { cat:'nature', emoji:'🌋', en:'Cave',          zh:'洞穴',      note:'地下空间，有矿石和怪物', tip:'深层大型洞穴在1.18更新后变得更大！' },
+  { cat:'nature', emoji:'🌊', en:'River',         zh:'河流',      note:'自然生成的水道', tip:'河边常见甘蔗和可以钓鱼的地方！' },
+  { cat:'nature', emoji:'🏖️', en:'Beach',         zh:'海滩',      note:'陆地和海洋交接处', tip:'海滩是找海龟的好地方！' },
+  { cat:'nature', emoji:'🌲', en:'Taiga',         zh:'泰加林',    note:'寒冷针叶林，有村庄和狐狸', tip:'泰加林村庄有独特的房屋设计！' },
+  { cat:'nature', emoji:'🎋', en:'Bamboo',        zh:'竹子',      note:'丛林里生长，喂熊猫', tip:'竹子也是搭脚手架（Scaffolding）的材料！' },
+  { cat:'nature', emoji:'🌸', en:'Cherry Grove',  zh:'樱花树林',  note:'粉色唯美群系，1.20新增', tip:'这是最美的群系之一，非常适合建家！' },
+
+  // ═══════════════════════════════
+  // THE NETHER (下界)
+  // ═══════════════════════════════
+  { cat:'nether', emoji:'🟧', en:'Nether Portal', zh:'下界传送门',note:'12块黑曜石做框架，打火石激活', tip:'进下界1格 = 主世界8格！' },
+  { cat:'nether', emoji:'🔥', en:'Lava',          zh:'熔岩',      note:'下界到处都是，会烧毁物品', tip:'下界合金和物品不会被熔岩烧毁！' },
+  { cat:'nether', emoji:'🍄', en:'Crimson Forest', zh:'绯红森林',  note:'红色蘑菇树林，有猪灵和疣猪兽', tip:'绯红菌+绯红木材可以当木材使用！' },
+  { cat:'nether', emoji:'🩵', en:'Warped Forest',  zh:'诡异森林',  note:'蓝色树林，末影人多', tip:'下界最安全的地方——猪灵和疣猪兽不会生成！' },
+  { cat:'nether', emoji:'🐷', en:'Piglin',        zh:'猪灵',      note:'猪形生物，可以用金锭交易', tip:'给猪灵扔金锭换下界宝物！' },
+  { cat:'nether', emoji:'🐗', en:'Hoglin',        zh:'疣猪兽',    note:'可以驱逐、掉落猪排', tip:'把疣猪兽放到主世界它会变成僵尸疣猪兽！' },
+  { cat:'nether', emoji:'💀', en:'Strider',       zh:'炽足兽',    note:'可以在熔岩上行走的生物', tip:'用菌柄钓竿+鞍骑着它走过熔岩湖！' },
+  { cat:'nether', emoji:'🏰', en:'Nether Fortress',zh:'下界堡垒', note:'有烈焰人和宝箱的堡垒', tip:'下界堡垒里找蜘蛛网和烈焰棒！' },
+  { cat:'nether', emoji:'🔴', en:'Nether Brick',  zh:'下界砖',    note:'下界堡垒的主要方块', tip:'用下界砖做的建筑有独特的黑暗风格！' },
+  { cat:'nether', emoji:'🔶', en:'Nether Wart',   zh:'下界疣',    note:'下界堡垒种植的神秘植物', tip:'大多数药水都需要下界疣作为基础材料！' },
+  { cat:'nether', emoji:'🪙', en:'Gold Ingot',    zh:'金锭',      note:'金矿石熔炼得到，下界必备', tip:'金锭和猪灵交易，不穿金甲猪灵会攻击你！' },
+
+  // ═══════════════════════════════
+  // THE END (末地)
+  // ═══════════════════════════════
+  { cat:'end', emoji:'🌌', en:'End Portal',      zh:'末地传送门',note:'在要塞里，用末影之眼激活', tip:'12格末影之眼全部放入才能激活！' },
+  { cat:'end', emoji:'🔮', en:'Ender Pearl',     zh:'末影珍珠',   note:'末影人掉落，可投掷瞬移', tip:'投掷末影珍珠会造成少量摔落伤害！' },
+  { cat:'end', emoji:'👁️', en:"Ender's Eye",     zh:'末影之眼',   note:'末影珍珠+烈焰粉合成，找要塞用', tip:'末影之眼飞向最近的要塞！' },
+  { cat:'end', emoji:'🐉', en:'Ender Dragon',    zh:'末影龙',     note:'游戏最终Boss，在末地中央', tip:'先破坏末地柱顶部的水晶，再打龙！' },
+  { cat:'end', emoji:'🟪', en:'End Stone',       zh:'末地石',     note:'末地的主要方块，爆炸抗性高', tip:'末地石砖是很好看的建筑材料！' },
+  { cat:'end', emoji:'🏙️', en:'End City',        zh:'末地城',     note:'击败龙后可到达，有鞘翅和宝藏', tip:'末地城里有潜影贝，小心被它打飞！' },
+  { cat:'end', emoji:'🪂', en:'Elytra',          zh:'鞘翅',       note:'末地飞船上获取，可以飞翔', tip:'用烟花火箭加速飞翔！' },
+  { cat:'end', emoji:'🌟', en:'Dragon Egg',      zh:'龙蛋',       note:'击败末影龙后获得，极稀有', tip:'龙蛋只有一个，小心收集！' },
+
+  // ═══════════════════════════════
+  // POTIONS & ENCHANTMENTS (药水/附魔)
+  // ═══════════════════════════════
+  { cat:'potions', emoji:'🧪', en:'Brewing Stand',zh:'酿造台',     note:'制作药水的设备', tip:'下界疣+玻璃瓶水=基础药水，再加材料！' },
+  { cat:'potions', emoji:'💚', en:'Potion of Healing',zh:'治疗药水',note:'立刻恢复生命值', tip:'对僵尸用反而是伤害！' },
+  { cat:'potions', emoji:'⚡', en:'Potion of Swiftness',zh:'速度药水',note:'增加移动速度', tip:'速度II效果更强，跑起来像飞！' },
+  { cat:'potions', emoji:'🦘', en:'Potion of Leaping',zh:'跳跃药水', note:'跳得更高', tip:'配合鞘翅飞得更远！' },
+  { cat:'potions', emoji:'🌊', en:'Potion of Water Breathing',zh:'水下呼吸药水',note:'可以在水下长时间停留', tip:'探索海底神殿必备！' },
+  { cat:'potions', emoji:'🔥', en:'Potion of Fire Resistance',zh:'防火药水',note:'完全免疫火焰和熔岩伤害', tip:'去下界冒险必须携带！' },
+  { cat:'potions', emoji:'👁️', en:'Potion of Night Vision',zh:'夜视药水', note:'在黑暗中也能看清', tip:'水下也有效，和海洋神殿绝配！' },
+  { cat:'potions', emoji:'💪', en:'Potion of Strength',zh:'力量药水',  note:'增加近战伤害', tip:'打Boss前喝力量药水！' },
+  { cat:'potions', emoji:'✨', en:'Enchanting Table',zh:'附魔台',     note:'消耗经验和青金石给装备附魔', tip:'周围放15个书架获得最高级附魔！' },
+  { cat:'potions', emoji:'🔧', en:'Mending',      zh:'经验修补',   note:'附魔，捡经验自动修复装备', tip:'这是游戏里最强大的附魔之一！' },
+  { cat:'potions', emoji:'🔥', en:'Fire Aspect',  zh:'火焰附魔',   note:'剑的附魔，攻击让怪物着火', tip:'自动烤熟怪物掉落的肉！' },
+  { cat:'potions', emoji:'💎', en:'Fortune',      zh:'时运',       note:'镐的附魔，挖矿多掉落', tip:'时运III挖钻石最多能掉落4颗！' },
+  { cat:'potions', emoji:'⚡', en:'Efficiency',   zh:'效率',       note:'工具附魔，提高挖掘速度', tip:'效率V镐像切黄油一样挖石头！' },
+  { cat:'potions', emoji:'🌊', en:'Aqua Affinity',zh:'水下速掘',   note:'头盔附魔，水下挖掘正常速度', tip:'没有这个附魔水下挖方块超级慢！' },
+  { cat:'potions', emoji:'🏹', en:'Infinity',     zh:'无限',       note:'弓的附魔，一支箭射无限', tip:'有这个附魔的弓只需一支箭就够了！' },
+
+  // ═══════════════════════════════
+  // COMMANDS & UI (设置/界面/指令)
+  // ═══════════════════════════════
+  { cat:'commands', emoji:'🎮', en:'Inventory',   zh:'背包',      note:'按 E 打开，存放物品', tip:'背包有36格，加上9格快捷栏！' },
+  { cat:'commands', emoji:'❤️', en:'Health',      zh:'生命值',    note:'屏幕上方的红心，最多10颗', tip:'睡觉或吃食物可以恢复生命值！' },
+  { cat:'commands', emoji:'🍗', en:'Hunger',      zh:'饥饿值',    note:'屏幕上方的鸡腿，降低停止回血', tip:'饥饿值低于7格无法疾跑！' },
+  { cat:'commands', emoji:'✨', en:'Experience',  zh:'经验值',    note:'绿色经验条，用于附魔', tip:'杀怪、挖矿、养殖都能获得经验！' },
+  { cat:'commands', emoji:'🗺️', en:'Coordinates', zh:'坐标',      note:'X Y Z三轴位置，Java版F3开启', tip:'Bedrock版在设置里打开"显示坐标"！' },
+  { cat:'commands', emoji:'💫', en:'/tp',          zh:'传送指令',  note:'/tp 玩家名 — 传送到指定玩家', tip:'/tp @s 0 64 0 传送到世界中心！' },
+  { cat:'commands', emoji:'🌤️', en:'/weather',    zh:'天气指令',  note:'/weather clear/rain/thunder', tip:'/weather clear 1000000 晴天100分钟！' },
+  { cat:'commands', emoji:'⚙️', en:'/gamemode',   zh:'游戏模式指令',note:'/gamemode 0-3 切换模式', tip:'0=生存 1=创造 2=冒险 3=旁观！' },
+  { cat:'commands', emoji:'☀️', en:'/time',       zh:'时间指令',  note:'/time set day/night 设置时间', tip:'/time set 0 立即变成白天！' },
+  { cat:'commands', emoji:'🎯', en:'Survival Mode',zh:'生存模式',  note:'需要吃饭、会死的正常模式', tip:'这是正常玩法，所有成就都能解锁！' },
+  { cat:'commands', emoji:'✏️', en:'Creative Mode',zh:'创造模式',  note:'有无限物品，可以飞翔，不会死', tip:'创造模式双击空格/跳跃键可以飞！' },
+  { cat:'commands', emoji:'🎭', en:'Adventure Mode',zh:'冒险模式', note:'只能用特定工具挖特定方块', tip:'地图创作者常用来做冒险地图！' },
+  { cat:'commands', emoji:'👁️', en:'Spectator Mode',zh:'旁观模式', note:'飞行穿越方块，只能观察', tip:'可以进入任何生物的视角观察！' },
+  { cat:'commands', emoji:'🌍', en:'Respawn',     zh:'复活',      note:'死亡后重新出现在世界里', tip:'在床附近死亡，在床旁边复活！' },
+  { cat:'commands', emoji:'🌐', en:'Multiplayer', zh:'多人游戏',  note:'和朋友一起联机玩', tip:'Bedrock版可以跨平台和手机、电脑联机！' },
+];
+
+/* ══════════════════════════════════════
+   RENDER ENGINE
+   ══════════════════════════════════════ */
+const CAT_COLORS = {
+  tools:    '#ff7043',
+  armor:    '#78909c',
+  mobs:     '#ef5350',
+  animals:  '#4caf50',
+  blocks:   '#8d6e63',
+  ores:     '#42a5f5',
+  food:     '#ffc107',
+  nature:   '#66bb6a',
+  nether:   '#bf360c',
+  end:      '#7e57c2',
+  potions:  '#ab47bc',
+  commands: '#26c6da',
+};
+
+function makeCard(w) {
+  const div = document.createElement('div');
+  div.className = 'word-card';
+  div.style.setProperty('--card-accent', CAT_COLORS[w.cat] || '#4caf50');
+  div.setAttribute('data-cat', w.cat);
+  div.setAttribute('data-en', w.en.toLowerCase());
+  div.setAttribute('data-zh', w.zh);
+  div.innerHTML = `
+    <div class="word-emoji">${w.emoji}</div>
+    <div class="word-en">${w.en}</div>
+    <div class="word-zh">${w.zh}</div>
+    <div class="word-note">${w.note}</div>
+    ${w.tip ? `<div class="word-tip">💡 ${w.tip}</div>` : ''}
+  `;
+  return div;
+}
+
+function renderAll() {
+  const cats = [...new Set(WORDS.map(w => w.cat))];
+  cats.forEach(cat => {
+    const grid = document.getElementById('grid-' + cat);
+    if (!grid) return;
+    const words = WORDS.filter(w => w.cat === cat);
+    words.forEach(w => grid.appendChild(makeCard(w)));
+    const cnt = document.getElementById('cnt-' + cat);
+    if (cnt) cnt.textContent = words.length + ' 词';
+  });
+  updateCount();
+}
+
+let currentCat = 'all';
+let currentSearch = '';
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  currentSearch = '';
+  document.getElementById('searchInput').value = '';
+
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.cat-section').forEach(sec => {
+    if (cat === 'all' || sec.dataset.cat === cat) {
+      sec.classList.remove('hidden');
+    } else {
+      sec.classList.add('hidden');
+    }
+  });
+
+  // Show all cards
+  document.querySelectorAll('.word-card').forEach(c => c.style.display = '');
+  document.getElementById('emptyState').style.display = 'none';
+  updateCount();
+}
+
+function doSearch(q) {
+  currentSearch = q.trim().toLowerCase();
+  currentCat = 'all';
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+  document.querySelector('.pill-all').classList.add('active');
+
+  document.querySelectorAll('.cat-section').forEach(sec => sec.classList.remove('hidden'));
+
+  let totalVisible = 0;
+  document.querySelectorAll('.word-card').forEach(card => {
+    const en = card.getAttribute('data-en');
+    const zh = card.getAttribute('data-zh');
+    const match = !currentSearch || en.includes(currentSearch) || zh.includes(currentSearch);
+    card.style.display = match ? '' : 'none';
+    if (match) totalVisible++;
+  });
+
+  // Hide empty sections
+  document.querySelectorAll('.cat-section').forEach(sec => {
+    const visible = [...sec.querySelectorAll('.word-card')].some(c => c.style.display !== 'none');
+    sec.classList.toggle('hidden', !visible);
+  });
+
+  document.getElementById('emptyState').style.display = totalVisible === 0 ? 'block' : 'none';
+  updateCount();
+}
+
+function updateCount() {
+  let count = 0;
+  document.querySelectorAll('.word-card').forEach(c => {
+    const secHidden = c.closest('.cat-section')?.classList.contains('hidden');
+    if (!secHidden && c.style.display !== 'none') count++;
+  });
+  document.getElementById('visibleCount').textContent = count;
+}
+
+// Scroll-to-top
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+});
+
+// Init
+renderAll();
+</script>
+</body>
+</html>
