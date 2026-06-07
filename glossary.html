@@ -337,9 +337,12 @@ main {
   border-radius: 4px;
   padding: 3px 6px;
   margin-top: 2px;
-  display: none;
+  min-height: 1.4em;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
-.word-card:hover .word-tip { display: block; }
+.word-card:hover .word-tip { visibility: visible; opacity: 1; }
 
 /* ── SPEAK BUTTON ── */
 .speak-btn {
@@ -912,7 +915,7 @@ function makeCard(w) {
     <div class="word-en" onclick="speakWord(event, '${w.en.replace(/'/g, "\\'")}')" title="点击朗读">${w.en}</div>
     <div class="word-zh">${w.zh}</div>
     <div class="word-note">${w.note}</div>
-    ${w.tip ? `<div class="word-tip">💡 ${w.tip}</div>` : ''}
+    ${w.tip ? `<div class="word-tip">💡 ${w.tip}</div>` : '<div class="word-tip">&nbsp;</div>'}
   `;
   return div;
 }
