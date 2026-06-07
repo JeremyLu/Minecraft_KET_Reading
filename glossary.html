@@ -309,6 +309,11 @@ main {
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.3px;
+  cursor: pointer;
+}
+.word-en:hover {
+  color: var(--mc-green);
+  text-decoration: underline dotted;
 }
 .word-zh {
   font-size: 1rem;
@@ -330,6 +335,47 @@ main {
   display: none;
 }
 .word-card:hover .word-tip { display: block; }
+
+/* ── SPEAK BUTTON ── */
+.speak-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.15s ease;
+  z-index: 2;
+  line-height: 1;
+  padding: 0;
+}
+.word-card:hover .speak-btn { opacity: 1; }
+.speak-btn:hover {
+  background: rgba(76,175,80,0.2);
+  border-color: var(--mc-green);
+  color: var(--mc-green);
+  transform: scale(1.15);
+}
+.speak-btn.speaking {
+  background: rgba(76,175,80,0.25);
+  border-color: var(--mc-green);
+  color: var(--mc-green);
+  opacity: 1;
+  animation: pulse-speak 0.6s ease-in-out infinite alternate;
+}
+@keyframes pulse-speak {
+  from { box-shadow: 0 0 0 0 rgba(76,175,80,0.4); }
+  to   { box-shadow: 0 0 0 6px rgba(76,175,80,0); }
+}
 
 /* ── EMPTY STATE ── */
 .empty-state {
@@ -381,7 +427,7 @@ main {
 <header>
   <div class="header-eyebrow">⛏ Angle's Word Bank</div>
   <h1>Minecraft 中英文词汇大全</h1>
-  <p class="header-sub">玩英文版 Minecraft 必备词汇 · 按分类学习 · 鼠标悬停查看游戏提示</p>
+  <p class="header-sub">玩英文版 Minecraft 必备词汇 · 按分类学习 · 点击英文单词或 🔊 可以听发音</p>
   <div class="header-nav">
     <a href="index.html" class="nav-btn">📖 KET 练习题</a>
     <span class="nav-btn active">📚 词汇大全</span>
@@ -847,13 +893,65 @@ function makeCard(w) {
   div.setAttribute('data-en', w.en.toLowerCase());
   div.setAttribute('data-zh', w.zh);
   div.innerHTML = `
+    <button class="speak-btn" onclick="speakWord(event, '${w.en.replace(/'/g, "\\'")}')" title="播放读音">🔊</button>
     <div class="word-emoji">${w.emoji}</div>
-    <div class="word-en">${w.en}</div>
+    <div class="word-en" onclick="speakWord(event, '${w.en.replace(/'/g, "\\'")}')" title="点击朗读">${w.en}</div>
     <div class="word-zh">${w.zh}</div>
     <div class="word-note">${w.note}</div>
     ${w.tip ? `<div class="word-tip">💡 ${w.tip}</div>` : ''}
   `;
   return div;
+}
+
+/* ── TTS: speak a word using Web Speech API ── */
+let _activeSpeakBtn = null;
+
+function speakWord(evt, text) {
+  evt.stopPropagation();
+  const btn = evt.currentTarget;
+
+  // Cancel any current speech
+  window.speechSynthesis.cancel();
+
+  // If same button clicked again while speaking, just stop
+  if (_activeSpeakBtn === btn) {
+    _activeSpeakBtn.classList.remove('speaking');
+    _activeSpeakBtn = null;
+    return;
+  }
+
+  // Clear previous button state
+  if (_activeSpeakBtn) {
+    _activeSpeakBtn.classList.remove('speaking');
+    _activeSpeakBtn = null;
+  }
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang  = 'en-US';
+  utter.rate  = 0.85;   // slightly slower for kids
+  utter.pitch = 1.0;
+
+  // Pick an English voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith('en') && v.localService) ||
+                  voices.find(v => v.lang.startsWith('en'));
+  if (enVoice) utter.voice = enVoice;
+
+  btn.classList.add('speaking');
+  _activeSpeakBtn = btn;
+
+  utter.onend = utter.onerror = () => {
+    btn.classList.remove('speaking');
+    if (_activeSpeakBtn === btn) _activeSpeakBtn = null;
+  };
+
+  window.speechSynthesis.speak(utter);
+}
+
+// Pre-load voices (some browsers need this)
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.getVoices();
+  speechSynthesis.addEventListener('voiceschanged', () => speechSynthesis.getVoices());
 }
 
 function renderAll() {
