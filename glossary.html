@@ -438,7 +438,7 @@ main {
   <h1>Minecraft 中英文词汇大全</h1>
   <p class="header-sub">玩英文版 Minecraft 必备词汇 · 按分类学习 · 点击英文单词或 🔊 可以听发音</p>
   <div class="header-nav">
-    <a href="index.html" class="nav-btn">📖 KET 练习题</a>
+    <a href="index.html" class="nav-btn" id="back-to-ket-btn" onclick="handleBackBtn(event)">📖 KET 练习题</a>
     <span class="nav-btn active">📚 词汇大全</span>
   </div>
 </header>
@@ -1150,6 +1150,43 @@ window.addEventListener('scroll', () => {
 
 // Init
 renderAll();
+</script>
+
+<script>
+// If opened inside an iframe (embedded in main page drawer),
+// clicking "KET 练习题" should close the drawer instead of navigating.
+function handleBackBtn(evt) {
+  try {
+    if (window.self !== window.top) {
+      evt.preventDefault();
+      // Tell the parent page to close the drawer
+      window.parent.closeGlossaryDrawer && window.parent.closeGlossaryDrawer();
+    }
+    // If top-level, allow normal href navigation
+  } catch(e) {
+    // Cross-origin error means we're in a restricted iframe; let it navigate
+  }
+}
+
+// If opened inside iframe, also hide the full page header's decorative 
+// background gradient so it blends better as a panel
+(function(){
+  try {
+    if (window.self !== window.top) {
+      // We're inside the drawer iframe — apply drawer-mode tweaks
+      document.documentElement.setAttribute('data-drawer-mode', '1');
+      var style = document.createElement('style');
+      style.textContent = [
+        '[data-drawer-mode="1"] header { padding-top: 16px; padding-bottom: 16px; }',
+        '[data-drawer-mode="1"] .header-eyebrow { display: none; }',
+        '[data-drawer-mode="1"] header h1 { font-size: 1.25rem; }',
+        '[data-drawer-mode="1"] .header-sub { font-size: 0.78rem; margin-bottom: 8px; }',
+        '[data-drawer-mode="1"] #back-to-ket-btn { display: none; }',  // redundant in drawer
+      ].join('\n');
+      document.head.appendChild(style);
+    }
+  } catch(e) {}
+})();
 </script>
 </body>
 </html>

@@ -990,7 +990,7 @@ header h1 {
     <span class="badge green" id="total-badge">0 Exercises</span>
     <span class="badge">📚 KET A2 Level</span>
     <span class="badge">🎮 Bedrock Edition</span>
-    <a href="glossary.html" style="background:rgba(255,193,7,0.12);border:1px solid rgba(255,193,7,0.35);border-radius:9999px;padding:4px 14px;font-size:0.75rem;font-weight:600;color:#ffc107;text-decoration:none;letter-spacing:0.3px;">📖 词汇大全</a>
+    <button onclick="openGlossaryDrawer()" style="background:rgba(255,193,7,0.12);border:1px solid rgba(255,193,7,0.35);border-radius:9999px;padding:4px 14px;font-size:0.75rem;font-weight:600;color:#ffc107;letter-spacing:0.3px;cursor:pointer;font-family:inherit;transition:all 0.15s;" onmouseover="this.style.background='rgba(255,193,7,0.25)'" onmouseout="this.style.background='rgba(255,193,7,0.12)'">📖 词汇大全</button>
     <span class="badge">🌏 Cross-Platform</span>
   </div>
 </header>
@@ -1517,6 +1517,95 @@ document.getElementById('load-more-btn').addEventListener('click', renderPage);
 // Init
 renderPage();
 });
+</script>
+
+<!-- ══ GLOSSARY DRAWER ══ -->
+<div id="glossary-overlay" onclick="closeGlossaryDrawer()" style="
+  position:fixed;inset:0;background:rgba(0,0,0,0.55);
+  z-index:900;opacity:0;pointer-events:none;
+  transition:opacity 0.3s ease;
+"></div>
+
+<div id="glossary-drawer" style="
+  position:fixed;top:0;right:0;height:100vh;
+  width:min(520px,92vw);
+  background:var(--bg-base);
+  border-left:1px solid var(--border);
+  z-index:901;
+  transform:translateX(100%);
+  transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-8px 0 40px rgba(0,0,0,0.5);
+">
+  <!-- Drawer header bar -->
+  <div style="
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;
+    border-bottom:1px solid var(--border);
+    background:var(--bg-surface);
+    flex-shrink:0;
+  ">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.2rem;">📖</span>
+      <span style="font-weight:700;font-size:0.95rem;letter-spacing:0.2px;">词汇大全</span>
+      <span style="font-size:0.72rem;color:var(--text-muted);background:var(--bg-elevated);
+        border-radius:4px;padding:2px 7px;">Minecraft 中英对照</span>
+    </div>
+    <button onclick="closeGlossaryDrawer()" style="
+      background:none;border:1px solid var(--border-accent);
+      border-radius:6px;color:var(--text-muted);
+      font-size:0.85rem;padding:5px 10px;cursor:pointer;
+      transition:all 0.15s;
+    " onmouseover="this.style.borderColor='#fff';this.style.color='#fff'"
+       onmouseout="this.style.borderColor='var(--border-accent)';this.style.color='var(--text-muted)'">✕ 关闭</button>
+  </div>
+  <!-- Iframe content -->
+  <iframe
+    id="glossary-iframe"
+    src=""
+    data-src="glossary.html"
+    style="flex:1;border:none;width:100%;background:var(--bg-base);"
+    title="Minecraft 词汇大全"
+  ></iframe>
+</div>
+
+<script>
+(function(){
+  var drawerOpen = false;
+
+  window.openGlossaryDrawer = function() {
+    var overlay = document.getElementById('glossary-overlay');
+    var drawer  = document.getElementById('glossary-drawer');
+    var iframe  = document.getElementById('glossary-iframe');
+
+    // Lazy-load iframe only on first open
+    if (!iframe.src || iframe.src === location.href) {
+      iframe.src = iframe.getAttribute('data-src');
+    }
+
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'auto';
+    drawer.style.transform = 'translateX(0)';
+    document.body.style.overflow = 'hidden';
+    drawerOpen = true;
+  };
+
+  window.closeGlossaryDrawer = function() {
+    var overlay = document.getElementById('glossary-overlay');
+    var drawer  = document.getElementById('glossary-drawer');
+
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    drawer.style.transform = 'translateX(100%)';
+    document.body.style.overflow = '';
+    drawerOpen = false;
+  };
+
+  // ESC key to close
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && drawerOpen) closeGlossaryDrawer();
+  });
+})();
 </script>
 </body>
 </html>
