@@ -1,1 +1,13 @@
-index-glossary-backup.html
+# Build output
+dist/
+
+# Old backup files
+*-backup.html
+index-old.html
+
+# Node
+node_modules/
+
+# Build scripts (one-time use)
+convert-exercises.cjs
+extract-glossary.cjs
