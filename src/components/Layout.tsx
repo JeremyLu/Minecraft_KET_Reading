@@ -1,10 +1,12 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { exerciseCount } from '../data';
 import { getDoneSet } from '../utils/storage';
 import { useEffect, useState } from 'react';
 
 export default function Layout() {
   const [doneCount, setDoneCount] = useState(0);
+  const location = useLocation();
+  const isGlossary = location.pathname === '/glossary';
 
   useEffect(() => {
     setDoneCount(getDoneSet().size);
@@ -25,15 +27,24 @@ export default function Layout() {
           <span className="badge green">{doneCount}/{exerciseCount} Exercises</span>
           <span className="badge">📚 KET A2 Level</span>
           <span className="badge">🎮 Bedrock Edition</span>
+          <span className="badge">🌏 Cross-Platform</span>
+        </div>
+
+        {/* ── Tab Navigation ── */}
+        <nav className="header-tabs">
+          <Link
+            to="/"
+            className={`header-tab ${!isGlossary ? 'active' : ''}`}
+          >
+            📝 KET 练习
+          </Link>
           <Link
             to="/glossary"
-            className="badge"
-            style={{ textDecoration: 'none', cursor: 'pointer' }}
+            className={`header-tab ${isGlossary ? 'active' : ''}`}
           >
             📖 词汇大全
           </Link>
-          <span className="badge">🌏 Cross-Platform</span>
-        </div>
+        </nav>
       </header>
 
       <Outlet />

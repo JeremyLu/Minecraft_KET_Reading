@@ -68,7 +68,7 @@ export default function Toolbar(props: Props) {
           <div className="toggle-track">
             <div className="toggle-thumb" />
           </div>
-          <span className="toggle-label">Hide Done</span>
+          <span className="toggle-label">隐藏已完成</span>
         </div>
         <button className="show-all-btn" onClick={props.onShowAll}>
           显示全部
