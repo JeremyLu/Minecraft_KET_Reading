@@ -1559,7 +1559,7 @@ renderPage();
     " onmouseover="this.style.borderColor='#fff';this.style.color='#fff'"
        onmouseout="this.style.borderColor='var(--border-accent)';this.style.color='var(--text-muted)'">✕ 关闭</button>
   </div>
-  <!-- Iframe content -->
+  <!-- Iframe content — works under http://, not file:// -->
   <iframe
     id="glossary-iframe"
     src=""
@@ -1576,6 +1576,13 @@ renderPage();
   window.openGlossaryDrawer = function() {
     var overlay = document.getElementById('glossary-overlay');
     var drawer  = document.getElementById('glossary-drawer');
+
+    // file:// protocol can't load iframe cross-file — open in new tab instead
+    if (location.protocol === 'file:') {
+      window.open('glossary.html', '_blank');
+      return;
+    }
+
     var iframe  = document.getElementById('glossary-iframe');
 
     // Lazy-load iframe only on first open
