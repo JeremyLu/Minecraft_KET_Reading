@@ -81,7 +81,6 @@ export interface ExerciseData {
   grammarFocus: string;
 
   // Optional extra fields used by some exercise files
-  notices?: string[];
   signType?: string;
   text?: string;
 }
