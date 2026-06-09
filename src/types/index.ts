@@ -47,7 +47,7 @@ export interface BlankItem {
 }
 
 // ─── Union type for each exercise ───────────────────
-export type ExerciseType = "Part 1" | "Part 2" | "Part 3" | "Part 4" | "Part 5";
+export type ExerciseType = "Part 1" | "Part 2" | "Part 3" | "Part 4" | "Part 5" | "Listening";
 
 // ─── Main Exercise Data type ────────────────────────
 export interface ExerciseData {
@@ -69,6 +69,9 @@ export interface ExerciseData {
   // Part 4 & 5: cloze
   clozeText?: string;
   blanks?: BlankItem[];
+
+  // Listening: audio text to be read by TTS
+  audioText?: string;
 
   // Common
   answers: AnswerItem[];

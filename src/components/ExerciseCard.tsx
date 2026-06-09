@@ -1,7 +1,7 @@
 import type { NormalizedExercise } from '../types';
 import { useState, useCallback, useEffect } from 'react';
 import { isDone, toggleDone as toggleDoneStorage } from '../utils/storage';
-import { speak } from '../utils/tts';
+import { speak, speakKETListening } from '../utils/tts';
 
 interface CardProps {
   exercise: NormalizedExercise;
@@ -15,6 +15,8 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
   const [matchAnswers, setMatchAnswers] = useState<Record<number, string>>({});
   const [blankAnswers, setBlankAnswers] = useState<Record<number, string>>({});
   const [checked, setChecked] = useState(false);
+  const [listenPlaying, setListenPlaying] = useState(false);
+  const [listenPlayed, setListenPlayed] = useState(false);
 
   // Reset state when exercise changes
   useEffect(() => {
@@ -23,6 +25,8 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
     setMatchAnswers({});
     setBlankAnswers({});
     setChecked(false);
+    setListenPlaying(false);
+    setListenPlayed(false);
   }, [exercise.id]);
 
   const ex = exercise;
@@ -197,12 +201,74 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
     );
   };
 
+  // ── Render listening (Listening) ──────────────────
+  const handleListenPlay = useCallback(() => {
+    if (listenPlaying) {
+      window.speechSynthesis.cancel();
+      setListenPlaying(false);
+      return;
+    }
+    if (!ex.audioText) return;
+    setListenPlaying(true);
+    setListenPlayed(true);
+
+    speakKETListening(ex.audioText).then(() => {
+      setListenPlaying(false);
+    });
+  }, [listenPlaying, ex.audioText]);
+
+  const renderListening = () => {
+    if (!ex.audioText) return null;
+    return (
+      <div className="listen-area">
+        <div className="listen-icon">🎧</div>
+        <div className="listen-instruction">
+          {!listenPlayed
+            ? 'You will hear the recording. Listen carefully, then answer the questions.'
+            : 'You can listen again. Click Replay if you need to hear the recording a second time.'}
+        </div>
+        <button
+          className={`listen-play-btn ${listenPlaying ? 'playing' : ''} ${listenPlayed ? 'played' : ''}`}
+          onClick={handleListenPlay}
+        >
+          {listenPlaying ? (
+            <>
+              <span className="listen-spinner" />
+              <span>Playing...</span>
+            </>
+          ) : listenPlayed ? (
+            <>
+              <span>🔄</span>
+              <span>Replay Audio</span>
+            </>
+          ) : (
+            <>
+              <span>🔊</span>
+              <span>Play Audio</span>
+            </>
+          )}
+        </button>
+        {renderQuestions()}
+      </div>
+    );
+  };
+
   // ── Render answer section ───────────────────────────
   const renderAnswer = () => {
     if (!showAnswer) return null;
     return (
       <div className="answer-section">
         <div className="answer-content visible">
+          {type === 'Listening' && ex.passage && (
+            <div className="listen-transcript">
+              <div className="transcript-label">📝 Transcript</div>
+              <div className="transcript-text">
+                {ex.passage.split('\n').map((line, i) =>
+                  line === '' ? <br key={i} /> : <p key={i} style={{ margin: '0 0 0.4em 0' }}>{line}</p>
+                )}
+              </div>
+            </div>
+          )}
           {ex.answers.map(a => (
             <div key={a.id} className="answer-item">
               <div className="answer-q">Q{a.id} Answer: <span className="answer-val">{a.answer}</span></div>
@@ -236,7 +302,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
     <div className={cardCls} style={{ animationDelay: `${index * 0.04}s` }}>
       {/* Header */}
       <div className="card-header">
-        <div className="card-icon-wrap" style={{ color: ex.typeColor }}>{type === 'Part 1' ? '📋' : type === 'Part 2' ? '🔗' : type === 'Part 3' ? '📖' : type === 'Part 4' ? '✏️' : '✏️'}</div>
+        <div className="card-icon-wrap" style={{ color: ex.typeColor }}>{type === 'Part 1' ? '📋' : type === 'Part 2' ? '🔗' : type === 'Part 3' ? '📖' : type === 'Part 4' ? '✏️' : type === 'Listening' ? '🎧' : '✏️'}</div>
         <div className="card-meta">
           <div className="card-title">
             {ex.title}
@@ -272,6 +338,9 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
 
         {/* Part 5: open cloze */}
         {type === 'Part 5' && renderCloze()}
+
+        {/* Listening: audio player + hidden passage + questions */}
+        {type === 'Listening' && renderListening()}
       </div>
 
       {/* Answer */}

@@ -22,6 +22,7 @@ const TYPE_CONFIG: Record<string, { cls: string; short: string; color: string }>
   'Part 3': { cls: 'type-part3', short: 'P3', color: '#3a2a0a' },
   'Part 4': { cls: 'type-part4', short: 'P4', color: '#0a2a3a' },
   'Part 5': { cls: 'type-part5', short: 'P5', color: '#0a3a3a' },
+  'Listening': { cls: 'type-listening', short: '🎧', color: '#ff7043' },
 };
 
 // ─── Load all exercises ──────────────────────────────────────

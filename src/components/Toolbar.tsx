@@ -19,6 +19,7 @@ const TYPES = [
   { id: 'Part 3', label: 'Part 3' },
   { id: 'Part 4', label: 'Part 4' },
   { id: 'Part 5', label: 'Part 5' },
+  { id: 'Listening', label: '🎧 听力' },
   { id: 'done',  label: '✅ 已完成' },
 ];
 

@@ -11,13 +11,16 @@ const VOICE_PRIORITY: Record<string, number> = {
   'Tessa':      90,
   'Veena':      88,
   'Victoria':   86,
-  // Google / Microsoft — good quality
+  // British English — preferred for KET listening
+  'Daniel':      97,
+  'Serena':      95,
+  'Google UK English Female': 84,
+  'Google UK English Male':   82,
+  // American English — good quality
   'Google US English': 80,
-  'Google UK English Male':   78,
   'Microsoft Zira':          76,
   'Microsoft David':          74,
   // Acceptable fallback
-  'Daniel': 60,
   'Arthur': 58,
   'Fred':   56,
   // Penalised — robotic / annoying
@@ -88,4 +91,37 @@ export function speak(text: string, voiceId?: string, voiceName?: string): void 
   }
 
   window.speechSynthesis.speak(u);
+}
+
+/**
+ * KET Listening — British English, slow & clear (~120 wpm).
+ * Must be called after preloadVoices() to ensure the voice list is ready.
+ */
+export function speakKETListening(text: string): Promise<void> {
+  return preloadVoices().then(voices => {
+    window.speechSynthesis.cancel();
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB';
+    u.rate = 0.72;       // ~120 wpm — KET listening exam speed
+    u.pitch = 1.0;
+
+    // Prefer British English voices
+    const gb = voices.filter(v => v.lang === 'en-GB');
+    if (gb.length > 0) {
+      const best = getBestVoice(gb);
+      if (best) u.voice = best;
+    } else {
+      // Fallback: any English voice
+      const en = voices.filter(v => /^en[-_]/.test(v.lang));
+      const best = getBestVoice(en);
+      if (best) u.voice = best;
+    }
+
+    return new Promise<void>(resolve => {
+      u.onend = () => resolve();
+      u.onerror = () => resolve();
+      window.speechSynthesis.speak(u);
+    });
+  });
 }
