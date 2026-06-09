@@ -790,6 +790,9 @@ header h1 {
 .mcq-cloze-select.correct { border-color: var(--mc-green); color: #81c784; }
 .mcq-cloze-select.wrong   { border-color: var(--mc-red);   color: #ef9a9a; }
 
+/* ── Listening questions — force full width inside listen-area ── */
+.listen-area .questions-section { width: 100%; }
+
 /* ═══════════════════════════════════════════
    LISTENING (🎧 听力)
    ═══════════════════════════════════════════ */
