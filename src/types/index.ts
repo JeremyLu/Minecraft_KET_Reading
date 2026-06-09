@@ -89,7 +89,9 @@ export interface ExerciseData {
 // ─── Normalized exercise (after processing) ─────────
 export interface NormalizedExercise extends ExerciseData {
   typeClass: string;   // CSS class for card styling
-  typeShort: string;    // short label for badge
+  typeShort: string;    // short label for badge (e.g. "P1", "🎧")
+  typeLabel: string;    // Chinese label (e.g. "Part 1 阅读理解")
+  typeDesc: string;     // Chinese description of this type
   typeColor: string;    // badge color
 }
 

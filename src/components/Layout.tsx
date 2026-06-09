@@ -2,8 +2,10 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { exerciseCount } from '../data';
 import { getDoneSet } from '../utils/storage';
 import { useEffect, useState } from 'react';
+import { useI18n } from '../i18n';
 
 export default function Layout() {
+  const { t } = useI18n();
   const [doneCount, setDoneCount] = useState(0);
   const location = useLocation();
   const isGlossary = location.pathname === '/glossary';
@@ -36,13 +38,13 @@ export default function Layout() {
             to="/"
             className={`header-tab ${!isGlossary ? 'active' : ''}`}
           >
-            📝 KET 练习
+            {t('layout.tabKET')}
           </Link>
           <Link
             to="/glossary"
             className={`header-tab ${isGlossary ? 'active' : ''}`}
           >
-            📖 词汇大全
+            {t('layout.tabGlossary')}
           </Link>
         </nav>
       </header>

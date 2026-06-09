@@ -16,13 +16,13 @@ export const CATEGORY_LIST = [
 ] as const;
 
 // ─── Type display config ────────────────────────────────────
-const TYPE_CONFIG: Record<string, { cls: string; short: string; color: string }> = {
-  'Part 1': { cls: 'type-part1', short: 'P1', color: '#3a3a3a' },
-  'Part 2': { cls: 'type-part2', short: 'P2', color: '#4a1a78' },
-  'Part 3': { cls: 'type-part3', short: 'P3', color: '#3a2a0a' },
-  'Part 4': { cls: 'type-part4', short: 'P4', color: '#0a2a3a' },
-  'Part 5': { cls: 'type-part5', short: 'P5', color: '#0a3a3a' },
-  'Listening': { cls: 'type-listening', short: '🎧', color: '#ff7043' },
+export const TYPE_CONFIG: Record<string, { cls: string; short: string; label: string; desc: string; color: string }> = {
+  'Part 1': { cls: 'type-part1', short: 'P1', label: 'Part 1 阅读', desc: '阅读通知、告示、标识等短文本，选择正确答案', color: '#3a3a3a' },
+  'Part 2': { cls: 'type-part2', short: 'P2', label: 'Part 2 匹配', desc: '阅读人物描述，匹配对应的物品或信息', color: '#4a1a78' },
+  'Part 3': { cls: 'type-part3', short: 'P3', label: 'Part 3 阅读', desc: '阅读日记、故事等长文本，回答选择题', color: '#3a2a0a' },
+  'Part 4': { cls: 'type-part4', short: 'P4', label: 'Part 4 完形', desc: '从选项中选择合适的词填入空白处', color: '#0a2a3a' },
+  'Part 5': { cls: 'type-part5', short: 'P5', label: 'Part 5 填空', desc: '根据上下文填入正确的单词（无选项提示）', color: '#0a3a3a' },
+  'Listening': { cls: 'type-listening', short: '🎧', label: '听力理解', desc: '听一段英文录音，回答选择题', color: '#ff7043' },
 };
 
 // ─── Load all exercises ──────────────────────────────────────
@@ -38,8 +38,8 @@ function loadAll(): ExerciseData[] {
 export function normalizeAll(): NormalizedExercise[] {
   const raw = loadAll();
   return raw.map(ex => {
-    const cfg = TYPE_CONFIG[ex.type] || { cls: '', short: '', color: '#333' };
-    return { ...ex, typeClass: cfg.cls, typeShort: cfg.short, typeColor: cfg.color } as NormalizedExercise;
+    const cfg = TYPE_CONFIG[ex.type] || { cls: '', short: '', label: '', desc: '', color: '#333' };
+    return { ...ex, typeClass: cfg.cls, typeShort: cfg.short, typeLabel: cfg.label, typeDesc: cfg.desc, typeColor: cfg.color } as NormalizedExercise;
   });
 }
 

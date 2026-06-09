@@ -248,6 +248,18 @@ header h1 {
   box-shadow: 0 0 12px rgba(76,175,80,0.4);
 }
 
+/* Type description row */
+.type-desc-row {
+  padding: 0 var(--sp-6) 8px var(--sp-6);
+  display: flex;
+  align-items: center;
+}
+.type-desc-text {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 /* Category pills */
 .category-row {
   display: flex;
@@ -345,6 +357,29 @@ header h1 {
   display: flex;
   align-items: center;
 }
+
+/* Language toggle */
+.lang-toggle-btn {
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-accent);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  margin-left: 6px;
+}
+.lang-toggle-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: #4a4a4a;
+}
+
 .search-icon {
   position: absolute;
   left: 12px;

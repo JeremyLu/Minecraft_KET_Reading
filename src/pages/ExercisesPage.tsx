@@ -4,10 +4,12 @@ import ProgressBar from '../components/ProgressBar';
 import ExerciseCard from '../components/ExerciseCard';
 import { normalizeAll, exerciseCount } from '../data';
 import { getDoneSet } from '../utils/storage';
+import { useI18n } from '../i18n';
 
 const PAGE_SIZE = 6;
 
 export default function ExercisesPage() {
+  const { t } = useI18n();
   const [activeType, setActiveType] = useState('all');
   const [activeCat, setActiveCat] = useState('all');
   const [search, setSearch] = useState('');
@@ -74,7 +76,7 @@ export default function ExercisesPage() {
         {paged.length === 0 && (
           <div id="empty-state" style={{ display: 'block', gridColumn: '1 / -1' }}>
             <div className="icon" style={{ fontSize: '3.5rem', marginBottom: 16, opacity: 0.4 }}>🔍</div>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>No exercises match your filters. Try adjusting the search or show all.</p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('exercises.empty')}</p>
           </div>
         )}
         {paged.map((ex, idx) => (
@@ -85,12 +87,12 @@ export default function ExercisesPage() {
       <div id="load-more-section">
         {hasMore ? (
           <button id="load-more-btn" onClick={() => setPage(p => p + 1)}>
-            Load More ({paged.length}/{filtered.length})
+            {t('exercises.loadMore')} ({paged.length}/{filtered.length})
           </button>
         ) : (
           paged.length > 0 && (
             <div id="all-done-msg" style={{ display: 'block', marginTop: 12, fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-              🎉 All {filtered.length} exercises loaded!
+              {t('exercises.allDone', { n: filtered.length })}
             </div>
           )
         )}

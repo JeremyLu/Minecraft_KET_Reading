@@ -2,6 +2,7 @@ import type { NormalizedExercise } from '../types';
 import { useState, useCallback, useEffect } from 'react';
 import { isDone, toggleDone as toggleDoneStorage } from '../utils/storage';
 import { speak, speakKETListening } from '../utils/tts';
+import { useI18n } from '../i18n';
 
 interface CardProps {
   exercise: NormalizedExercise;
@@ -9,6 +10,7 @@ interface CardProps {
 }
 
 export default function ExerciseCard({ exercise, index }: CardProps) {
+  const { t, lang } = useI18n();
   const done = isDone(exercise.id);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selected, setSelected] = useState<Record<string, number>>({});
@@ -34,6 +36,12 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
 
   // ── Helpers ──────────────────────────────────────────
   const labelOf = (idx: number) => String.fromCharCode(65 + idx); // 0→A
+
+  // Get type display label (language-aware, fallback to typeLabel from data)
+  const typeDisplay = (() => {
+    if (type === 'Listening') return t('type.Listening');
+    return t(`type.${type}`);
+  })();
 
   const handleCheck = useCallback(() => {
     setChecked(true);
@@ -160,7 +168,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
     return (
       <>
         <div className="passage-matching">
-          <div className="passage-matching-label">🔗 Match each player with the correct item:</div>
+          <div className="passage-matching-label">{t('card.matchLabel')}</div>
           {ex.players.map(p => (
             <div key={p.id} className="item-card">
               <div className="item-card-head">
@@ -171,7 +179,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
             </div>
           ))}
         </div>
-        <div className="match-players-header">Select the correct item for each player:</div>
+        <div className="match-players-header">{t('card.matchSelect')}</div>
         {ex.players.map(p => {
           const val = matchAnswers[p.id] || '';
           const correctLabel = ex.correctMatching?.[p.id] || '';
@@ -189,7 +197,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
                 onChange={e => !checked && setMatchAnswers(prev => ({ ...prev, [p.id]: e.target.value }))}
                 disabled={checked}
               >
-                <option value="">-- choose --</option>
+                <option value="">{t('card.matchChoose')}</option>
                 {shuffled.map(item => (
                   <option key={item.label} value={item.label}>{item.label}. {item.name}</option>
                 ))}
@@ -223,9 +231,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
       <div className="listen-area">
         <div className="listen-icon">🎧</div>
         <div className="listen-instruction">
-          {!listenPlayed
-            ? 'You will hear the recording. Listen carefully, then answer the questions.'
-            : 'You can listen again. Click Replay if you need to hear the recording a second time.'}
+          {!listenPlayed ? t('card.listenFirst') : t('card.listenAgain')}
         </div>
         <button
           className={`listen-play-btn ${listenPlaying ? 'playing' : ''} ${listenPlayed ? 'played' : ''}`}
@@ -234,17 +240,17 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
           {listenPlaying ? (
             <>
               <span className="listen-spinner" />
-              <span>Playing...</span>
+              <span>{t('card.listenPlaying')}</span>
             </>
           ) : listenPlayed ? (
             <>
               <span>🔄</span>
-              <span>Replay Audio</span>
+              <span>{t('card.listenReplay')}</span>
             </>
           ) : (
             <>
               <span>🔊</span>
-              <span>Play Audio</span>
+              <span>{t('card.listenPlay')}</span>
             </>
           )}
         </button>
@@ -261,7 +267,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
         <div className="answer-content visible">
           {type === 'Listening' && ex.passage && (
             <div className="listen-transcript">
-              <div className="transcript-label">📝 Transcript</div>
+              <div className="transcript-label">{t('card.transcript')}</div>
               <div className="transcript-text">
                 {ex.passage.split('\n').map((line, i) =>
                   line === '' ? <br key={i} /> : <p key={i} style={{ margin: '0 0 0.4em 0' }}>{line}</p>
@@ -271,13 +277,13 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
           )}
           {ex.answers.map(a => (
             <div key={a.id} className="answer-item">
-              <div className="answer-q">Q{a.id} Answer: <span className="answer-val">{a.answer}</span></div>
+              <div className="answer-q">{t('card.answerQ', { n: a.id })} <span className="answer-val">{a.answer}</span></div>
               <div className="answer-why">{a.explanation}</div>
             </div>
           ))}
           {ex.vocabulary && ex.vocabulary.length > 0 && (
             <div className="vocab-section">
-              <div className="vocab-header">📚 Vocabulary</div>
+              <div className="vocab-header">{t('card.vocabHeader')}</div>
               <div className="vocab-grid">
                 {ex.vocabulary.map((v, vi) => (
                   <div key={vi} className="vocab-item">
@@ -309,9 +315,9 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
             <span className="ex-id">{ex.id}</span>
           </div>
           <div className="card-tags">
-            <span className="tag tag-cat">{ex.categoryZh}</span>
-            <span className={`tag tag-${ex.type.replace(' ', '').toLowerCase()}`}>{ex.typeShort}</span>
-            {done && <span className="tag tag-done">✅ 已完成</span>}
+            <span className="tag tag-cat">{lang === 'en' ? ex.category : ex.categoryZh}</span>
+            <span className={`tag tag-${ex.type.replace(' ', '').toLowerCase()}`} title={t(`desc.${ex.type}`)}>{typeDisplay}</span>
+            {done && <span className="tag tag-done">{t('card.doneLabel')}</span>}
           </div>
         </div>
       </div>
@@ -346,7 +352,7 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
       {/* Answer */}
       <div style={{ padding: '0 16px' }}>
         <button className={`answer-toggle ${showAnswer ? 'open' : ''}`} onClick={() => setShowAnswer(!showAnswer)}>
-          🔑 Answer & Vocabulary
+          {t('card.answerToggle')}
           <span className="toggle-arrow">{showAnswer ? '▲' : '▼'}</span>
         </button>
         {renderAnswer()}
@@ -355,12 +361,12 @@ export default function ExerciseCard({ exercise, index }: CardProps) {
       {/* Footer */}
       <div className="card-footer">
         <button className="btn btn-check" onClick={handleCheck} disabled={checked}>
-          ✅ Check Answer
+          {t('card.checkBtn')}
         </button>
         <button className="btn btn-reset" onClick={handleReset}>
-          🔄 Reset
+          {t('card.resetBtn')}
         </button>
-        {done && <span style={{ color: 'var(--mc-green)', fontSize: '0.75rem', marginLeft: 'auto' }}>✅ Completed</span>}
+        {done && <span style={{ color: 'var(--mc-green)', fontSize: '0.75rem', marginLeft: 'auto' }}>{t('card.doneLabel')}</span>}
       </div>
     </div>
   );
